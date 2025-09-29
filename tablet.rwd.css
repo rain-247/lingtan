@@ -1,0 +1,952 @@
+/* ============================================================
+【平板覆寫要點（641–1023px）】
+- Section2 直向改 4:3，橫向維持 16:9；可依需求改 aspect-ratio。 
+- 3~7 區段在平板改雙欄：可調 grid 間距與字級。
+- 第 8 區段卡片欄數：直向 2 欄、橫向 3 欄，想更密集就調 repeat()。
+============================================================ */
+
+/* ============================================================
+【平板樣式覆寫指南】
+- 僅影響 641–1023px 寬度範圍（常見平板）。
+- Section2 圖片比例：直向 4:3、橫向 16:9，可自行調整。
+- 第3~7區段改為雙欄；要改字級或圖片比例可在這裡調整。
+- 第8區段卡片欄數：直向 2 欄、橫向 3 欄，可依需求改 repeat() 數字。
+============================================================ */
+
+
+/* ===================================================================
+   tablet.rwd.css — 平板等中間尺寸最佳化
+   基準：沿用你目前的電腦版（≥1024px）與手機版（≤640px）樣式，
+   只在 641–1023px 之間覆寫需要微調的區塊。
+   不破壞原 HTML；僅覆寫既有 class/id。
+   =================================================================== */
+
+/* 範圍：一般平板直橫向 */
+@media (min-width: 641px) and (max-width: 1023px) {
+
+  /* ---- 全域排版 ---- */
+  html { font-size: 16px; } /* 比手機略大、比桌機略小 */
+  .container { max-width: 960px; }
+
+  /* 導覽列高度與內距微調，避免佔版面 */
+  nav .h-16 { height: 60px; }
+  nav .logo { height: 44px; }
+
+  /* 主視覺滑塊：維持 16:9，但限制高度避免超出 */
+  .slider-container.aspect-\[16\/9\] {
+    aspect-ratio: 16 / 9;
+    max-height: 520px;
+  }
+
+  /* section 通用外距：縮小垂直留白，增強資訊密度 */
+  section { scroll-margin-top: 68px; }
+  section .section-title { font-size: clamp(1.25rem, 2.6vw, 1.5rem); }
+
+  /* ---- Section 2：地圖區（你的 section2.rwd.css 已定義手機／桌機）---- */
+  /* 平板直向（偏高、窄）時，改為 4:3 以容納更多地圖內容 */
+  @media (orientation: portrait) {
+    #section2 .slide-viewport { aspect-ratio: 4 / 3 !important; }
+    #section2 .s2-slide { height: clamp(360px, 64vw, 600px) !important; }
+  }
+  /* 平板橫向（偏寬）時，維持 16:9，但提升資訊層文字尺寸 */
+  @media (orientation: landscape) {
+    #section2 .slide-viewport { aspect-ratio: 16 / 9 !important; }
+    #section2 .s2-caption .cap-title { font-size: 1rem !important; }
+    #section2 .s2-caption .cap-desc  { font-size: .875rem !important; }
+  }
+
+  /* 地圖上的半透明資訊框：減少遮擋、靠左下角對齊 */
+  #section2 .s2-caption {
+    left: 16px !important;
+    bottom: 16px !important;
+    right: auto !important;
+    transform: none !important;
+    max-width: min(68vw, 560px) !important;
+    padding: 10px 12px !important;
+  }
+
+  /* 地圖上一頁／下一頁箭頭：縮小並置中對齊圖片高度中央 */
+  #section2 .s2-arrow {
+    width: 36px !important; height: 36px !important;
+    line-height: 36px !important;
+    top: 50% !important; transform: translateY(-50%) !important;
+  }
+
+  /* ---- Sections 3–7：圖文排版 ---- */
+  /* 平板改為左右雙欄（桌機是較寬雙欄、手機單欄），圖片 5:4 提高可視範圍 */
+  #section3 .text-image-wrap,
+  #section4 .text-image-wrap,
+  #section5 .text-image-wrap,
+  #section6 .text-image-wrap,
+  #section7 .text-image-wrap {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: clamp(16px, 3vw, 28px) !important;
+    align-items: center !important;
+  }
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img {
+    width: 100% !important;
+    aspect-ratio: 5 / 4 !important;
+    object-fit: cover !important;
+    border-radius: 14px !important;
+  }
+  #section3 .text-block,
+  #section4 .text-block,
+  #section5 .text-block,
+  #section6 .text-block,
+  #section7 .text-block {
+    font-size: clamp(0.95rem, 2vw, 1.05rem) !important;
+    line-height: 1.6 !important;
+  }
+
+  /* 交錯排版：奇偶數段落互換左右，維持節奏 */
+  #section3 .text-image-wrap > .image-block { order: 1; }
+  #section3 .text-image-wrap > .text-block  { order: 2; }
+  #section4 .text-image-wrap > .image-block { order: 2; }
+  #section4 .text-image-wrap > .text-block  { order: 1; }
+  #section5 .text-image-wrap > .image-block { order: 1; }
+  #section5 .text-image-wrap > .text-block  { order: 2; }
+  #section6 .text-image-wrap > .image-block { order: 2; }
+  #section6 .text-image-wrap > .text-block  { order: 1; }
+  #section7 .text-image-wrap > .image-block { order: 1; }
+  #section7 .text-image-wrap > .text-block  { order: 2; }
+
+  /* ---- Section 8：店鋪卡片 ---- */
+  /* 平板直向 2 欄、橫向 3 欄；卡片固定高避免跳動 */
+  @media (orientation: portrait) {
+    #section8 .cards-grid { 
+      display: grid !important; 
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: clamp(12px, 2.6vw, 20px) !important;
+    }
+  }
+  @media (orientation: landscape) {
+    #section8 .cards-grid { 
+      display: grid !important; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: clamp(12px, 2.2vw, 18px) !important;
+    }
+  }
+  #section8 .shop-card {
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
+  }
+  #section8 .shop-card img {
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  #section8 .shop-card .shop-body {
+    padding: 12px 14px !important;
+    min-height: 120px !important; /* 標題兩行 + 一段描述不會抽動 */
+  }
+
+  /* ---- 彈窗（通用）---- */
+  .shop-modal, .s2-flyover {
+    width: min(88vw, 800px) !important;
+    max-height: 80vh !important;
+  }
+  .shop-modal .modal-image {
+    max-height: 42vh !important;
+    object-fit: cover !important;
+  }
+
+  /* ---- 其他小修 ---- */
+  /* 防止頁面寬度抖動（ScrollBar 製造 100vw 溢位） */
+  body { overflow-x: hidden; }
+  nav { width: 100%; }
+}
+
+/* ===================================================================
+   進階：依長寬比微調（在平板範圍內再次切分）
+   - 偏「高」（手機感）的平板：max-aspect-ratio: 3/4
+   - 偏「寬」（桌機感）的平板：min-aspect-ratio: 3/2
+   =================================================================== */
+@media (min-width: 641px) and (max-width: 1023px) and (max-aspect-ratio: 3/4) {
+  /* 更像手機：圖片再高一些、字更緊湊 */
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img { aspect-ratio: 4 / 5 !important; }
+  #section2 .s2-caption { max-width: min(76vw, 560px) !important; }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) and (min-aspect-ratio: 3/2) {
+  /* 更像桌機：圖片較扁、卡片多一欄、字稍微放大 */
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img { aspect-ratio: 16 / 10 !important; }
+  #section8 .cards-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  section .section-title { font-size: clamp(1.35rem, 2.4vw, 1.6rem); }
+}
+
+
+/* ============================================================
+   依裝置寬度分級調整（Tablet 與以上）
+   放在 tablet.rwd.css 底部，覆寫上面的預設
+   ============================================================ */
+
+/* 361–480px 小手機 */
+@media (min-width: 1001px) and (max-width: 480px) {
+  :root { --safe-gutter: clamp(12px, 5vw, 22px); }
+  .navbar-inner, .slider-container, .title-block, .text-image-wrap { width: min(92vw, 1180px); }
+  section { width: min(95vw, 1180px); }
+  nav {
+    width: 100% !important; max-width: 100vw !important;
+  }
+}
+
+/* 481–640px 大手機 */
+@media (min-width: 481px) and (max-width: 640px) {
+  :root { --safe-gutter: clamp(14px, 5vw, 24px); }
+  .navbar-inner, .slider-container, .title-block, .text-image-wrap { width: min(90vw, 1180px); }
+  section { width: min(95vw, 1180px); }
+}
+
+/* 641–768px 小平板（直向） */
+@media (min-width: 641px) and (max-width: 768px) {
+  :root { --safe-gutter: clamp(16px, 4.5vw, 28px); }
+  .navbar-inner, .slider-container, .title-block, .text-image-wrap { width: min(88vw, 1160px); }
+  section { width: min(92vw, 1160px); }
+}
+
+/* 769–1023px 大平板（橫向） */
+@media (min-width: 769px) and (max-width: 1023px) {
+  :root { --safe-gutter: clamp(18px, 4vw, 32px); }
+  .navbar-inner, .slider-container, .title-block, .text-image-wrap { width: min(86vw, 1140px); }
+  section { width: min(90vw, 1140px); }
+}
+
+/* 1024–1439px 筆電常見 */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  :root { --safe-gutter: clamp(20px, 3.2vw, 36px); }
+  .navbar-inner, .slider-container, .title-block, .text-image-wrap { width: min(78vw, 1240px); }
+  section { width: min(86vw, 1240px); }
+}
+
+/* ≥1440px 桌機寬螢幕 */
+@media (min-width: 1440px) {
+  :root { --safe-gutter: clamp(24px, 3vw, 40px); }
+  .navbar-inner, .slider-container, .title-block, .text-image-wrap { width: min(70vw, 1280px); }
+  section { width: min(80vw, 1280px); }
+}
+
+
+
+/* === Supplemental tablet fixes for nav + section1 (2025-09-29) === */
+@media (min-width: 641px) and (max-width: 1023px) {
+  nav { width: 100% !important; max-width: 100vw !important; }
+  nav .container { max-width: 100% !important; width: 100% !important; padding-inline: clamp(12px, 3vw, 20px) !important; }
+  #section1 .container { max-width: 100% !important; width: 100% !important; }
+  #section1 .slider-container { width: 100% !important; max-width: 100% !important; }
+}
+/* === end tablet fixes === */
+
+
+/* === 1000–1280px layout: text first, image below; lock ratios to avoid jumping (2025-09-29) === */
+@media (min-width: 800px) and (max-width: 1280px) {
+
+  nav {
+    width: 100% !important;
+  }
+
+  .title-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-inline: clamp(12px, 3vw, 20px) !important;
+  }
+
+  .slider-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-inline: clamp(12px, 3vw, 20px) !important;
+  }
+  /* Sections 3–7: force single column, text above image */
+  #section3 .text-image-wrap,
+  #section4 .text-image-wrap,
+  #section5 .text-image-wrap,
+  #section6 .text-image-wrap,
+  #section7 .text-image-wrap {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: clamp(16px, 3vw, 28px) !important;
+    align-items: start !important;
+    width: 100% !important;
+  }
+
+  /* Order override: text first, image second */
+  #section3 .text-block, #section4 .text-block, #section5 .text-block, #section6 .text-block, #section7 .text-block {
+    order: 1 !important;
+    width: 100% !important;
+  }
+  #section3 .image-block, #section4 .image-block, #section5 .image-block, #section6 .image-block, #section7 .image-block {
+    order: 2 !important;
+    width: 100% !important;
+  }
+
+  /* Prevent image height jumping: fix aspect ratio and remove fixed heights */
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img,
+  #section3 .frame-tilt img,
+  #section4 .frame-tilt img,
+  #section5 .frame-tilt img,
+  #section6 .frame-tilt img,
+  #section7 .frame-tilt img {
+    width: 100% !important;
+    height: 400px !important;          /* override clamp heights */
+  }
+
+  /* Hide gallery arrows at this width to keep layout steady */
+  #section3 .img-nav, #section4 .img-nav, #section5 .img-nav, #section6 .img-nav, #section7 .img-nav,
+  #section3 .img-dots, #section4 .img-dots, #section5 .img-dots, #section6 .img-dots, #section7 .img-dots {
+    display: none !important;
+  }
+}
+
+
+/* === Tweak size: make images slimmer in 1000–1280px (2025-09-29) === */
+@media (min-width: 1000px) and (max-width: 1280px) {
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img,
+  #section3 .frame-tilt img,
+  #section4 .frame-tilt img,
+  #section5 .frame-tilt img,
+  #section6 .frame-tilt img,
+  #section7 .frame-tilt img {
+    width: 100% !important;
+    height: 500px !important;          /* fixed height to avoid jumping */
+  }
+}
+
+
+
+#section2 .s2-caption {
+    bottom: clamp(18px, 2.6vmin, 28px) !important;
+    left: clamp(12px, 2.6vmin, 24px) !important;
+    max-width: min(56vw, 560px) !important;
+    padding: 10px 12px !important;
+    z-index: 20 !important;
+    transform: none !important;
+  }
+  #section2 .s2-caption .cap-title,
+  #section2 .s2-cap-title { font-size: clamp(13px, 1.2vw, 15px) !important; margin: 0 0 2px 0 !important; }
+  #section2 .s2-caption .cap-desc,
+  #section2 .s2-cap-desc  { font-size: clamp(12px, 1.05vw, 14px) !important; line-height: 1.35 !important; }
+
+  #section2 .slide-viewport>.map-btn,
+  #section2 .map-btn {
+    right: clamp(12px, 2.8vmin, 22px) !important;
+    bottom: clamp(12px, 2.8vmin, 22px) !important;
+    z-index: 21 !important;
+  }
+
+
+
+nav, nav .container, nav .navbar-inner {
+    max-width: 100% !important; width: 100% !important; overflow-x: hidden !important; box-sizing: border-box !important;
+  }
+  nav .container { max-width: 1120px !important; margin: 0 auto !important; padding-inline: clamp(12px, 2.5vw, 20px) !important; }
+
+  #section1, #section1 .container {
+    max-width: 1120px !important; width: 100% !important; margin-inline: auto !important;
+    overflow-x: hidden !important; box-sizing: border-box !important;
+    padding-inline: clamp(12px, 2.5vw, 20px) !important;
+  }
+  #section1 .slider-container {
+    width: 100% !important; max-width: 100% !important;
+    aspect-ratio: 16 / 9 !important; max-height: 560px !important;
+    border-radius: 12px !important; overflow: hidden !important;
+  }
+  #section1 .slide { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; }
+
+/* === end Nav + Section1 tuning === */
+* { overflow-x: visible; }
+
+
+
+
+/* === Section2｜彈窗地圖：641–1024px RWD（只影響 #section2 modal）=== */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* 彈窗外層：穩定置中，不飄移 */
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important;
+    padding: clamp(8px, 3vmin, 20px) !important;
+  }
+
+  /* 面板：視窗 72vw 寬（最小 560、最大 820），上下分區：上地圖、下文字 */
+  #s2-flyover .s2-map-panel {
+    width: clamp(560px, 72vw, 820px) !important;
+    max-height: 90vh !important;
+    margin: auto !important;
+    display: grid !important;
+    grid-template-rows: 1fr auto !important; /* 上：地圖；下：caption */
+    gap: clamp(8px, 2vmin, 14px) !important;
+    top: auto !important; left: auto !important; transform: none !important;
+    overflow: hidden !important;
+    border-radius: 12px !important;
+  }
+
+  /* 地圖：維持不變形，優先吃高度 */
+  #s2-flyover .s2-map-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 64vh !important;     /* 讓地圖看起來比較大 */
+    object-fit: contain !important;   /* 不裁切、不拉扯 */
+    border-radius: 10px !important;
+    display: block !important;
+  }
+
+  /* 文字區：多就捲，不擠壓地圖 */
+  #s2-flyover .s2-map-caption {
+    max-height: 20vh !important;
+    overflow: auto !important;
+    padding: 10px 12px !important;
+    background: #ffffffd8 !important;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    border-radius: 10px !important;
+  }
+
+  /* 關閉按鈕固定右上 */
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 3 !important;
+  }
+
+  /* （可選）避免彈窗開啟前的右下 map 按鈕撞到 caption：只限 section2 */
+  #section2 .slide-viewport > .map-btn {
+    right: clamp(10px, 2.2vmin, 20px) !important;
+    bottom: clamp(10px, 2.2vmin, 20px) !important;
+    z-index: 4 !important;
+  }
+}
+
+/* 補一個視窗較矮的情境：橫放平板等，給地圖多一點高度，caption 少一點 */
+@media (min-width: 641px) and (max-width: 1024px) and (max-height: 740px) {
+  #s2-flyover .s2-map-img     { max-height: 68vh !important; }
+  #s2-flyover .s2-map-caption { max-height: 16vh !important; }
+}
+
+/* === Section2｜彈窗地圖：641–680px 進一步收窄，杜絕超寬 === */
+@media (min-width: 641px) and (max-width: 680px) {
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important;
+    padding: clamp(8px, 3vmin, 16px) !important;
+    overflow: hidden !important; /* 保險：禁水平捲動 */
+  }
+  #s2-flyover .s2-map-panel {
+    position: relative !important;
+    width: min(84vw, 560px) !important;                 /* ← 更窄 */
+    max-width: calc(100vw - 24px) !important;           /* ← 就算外層有 padding 也不爆 */
+    margin-inline: auto !important;
+    max-height: 92vh !important;
+    display: grid !important;
+    grid-template-rows: 1fr auto !important;            /* 上：地圖，下：說明 */
+    gap: clamp(8px, 2vmin, 14px) !important;
+    inset: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  #s2-flyover .s2-map-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 54vh !important;                        /* ← 再降一點高度 */
+    object-fit: contain !important;
+    border-radius: 10px !important;
+  }
+  #s2-flyover .s2-map-caption {
+    max-height: 28vh !important;                        /* ← 給文字，但不擠地圖 */
+    overflow: auto !important;
+    padding: 10px 12px !important;
+    background: #ffffffd8 !important;
+    border-radius: 10px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 3 !important;
+  }
+  #s2-flyover * {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* === Section2｜彈窗地圖：400–641px 收窄並降高 === */
+@media (min-width: 400px) and (max-width: 640px) {
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important;
+    padding: clamp(8px, 3.5vmin, 16px) !important;
+    overflow: hidden !important;
+  }
+  #s2-flyover .s2-map-panel {
+    position: relative !important;
+    width: min(90vw, 500px) !important;                 /* ← 更小、更穩 */
+    max-width: calc(100vw - 20px) !important;           /* ← 扣掉外層左右邊界 */
+    margin-inline: auto !important;
+    max-height: 94vh !important;
+    display: grid !important;
+    grid-template-rows: 1fr auto !important;
+    gap: clamp(8px, 2.5vmin, 14px) !important;
+    inset: auto !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+  #s2-flyover .s2-map-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 50vh !important;                        /* ← 降地圖高度上限 */
+    object-fit: contain !important;
+    border-radius: 10px !important;
+  }
+  #s2-flyover .s2-map-caption {
+    max-height: 30vh !important;                        /* ← 字可滾動 */
+    overflow: auto !important;
+    padding: 10px 12px !important;
+    background: #ffffffd8 !important;
+    border-radius: 10px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    width: 34px !important;
+    height: 34px !important;
+    z-index: 3 !important;
+  }
+  #s2-flyover * {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+}
+
+
+/* === Sections 3–8 @400–640px: unify visual height to 300px === */
+@media (min-width: 400px) and (max-width: 640px) {
+
+  /* 3–7 區：圖片容器固定高 300px */
+  #section3 .image-block,
+  #section4 .image-block,
+  #section5 .image-block,
+  #section6 .image-block,
+  #section7 .image-block,
+  #section3 .frame-tilt,
+  #section4 .frame-tilt,
+  #section5 .frame-tilt,
+  #section6 .frame-tilt,
+  #section7 .frame-tilt {
+    height: 300px !important;
+    max-height: 300px !important;
+    z-index: 999 !important;
+  }
+
+  /* 3–7 區：圖片等比填滿 300px 容器 */
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img,
+  #section3 .frame-tilt img,
+  #section4 .frame-tilt img,
+  #section5 .frame-tilt img,
+  #section6 .frame-tilt img,
+  #section7 .frame-tilt img {
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+  }
+
+}
+
+/* === Frame-Lock: 400–640px === */
+@media (min-width: 400px) and (max-width: 640px) {
+  /* 外框都成為裁切容器 */
+  #section1 .slider-container,
+  #section2 .slide-viewport,
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 12px;
+    max-width: 100% !important;
+    width: min(100%, 100vw) !important; /* 防止>100vw */
+    box-sizing: border-box !important;
+  }
+  /* 內圖填滿外框高寬、等比裁切 */
+  #section1 .slider-container img,
+  #section2 .slide-viewport img,
+  #section3 .image-block img, #section3 .frame-tilt img,
+  #section4 .image-block img, #section4 .frame-tilt img,
+  #section5 .image-block img, #section5 .frame-tilt img,
+  #section6 .image-block img, #section6 .frame-tilt img,
+  #section7 .image-block img, #section7 .frame-tilt img,
+  #section8 .cards-grid .card img, #section8 .shop-card img, #section8 .item-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* 不變形、超出即裁切 */
+    display: block !important;
+  }
+}
+
+/* === Frame-Lock: 641–680px（曾超寬的臨界段） === */
+@media (min-width: 641px) and (max-width: 680px) {
+  #section2 .slide-viewport { width: min(96vw, 100%) !important; }
+  #section2 .slide-viewport,
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    position: relative !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    width: min(100%, 100vw) !important;
+  }
+  #section2 .slide-viewport img,
+  #section3 .image-block img, #section3 .frame-tilt img,
+  #section4 .image-block img, #section4 .frame-tilt img,
+  #section5 .image-block img, #section5 .frame-tilt img,
+  #section6 .image-block img, #section6 .frame-tilt img,
+  #section7 .image-block img, #section7 .frame-tilt img,
+  #section8 .cards-grid .card img, #section8 .shop-card img, #section8 .item-card img {
+    width: 100% !important; height: 100% !important; object-fit: cover !important;
+  }
+}
+
+/* === Frame-Lock: 681–1024px === */
+@media (min-width: 681px) and (max-width: 1024px) {
+  #section1 .slider-container,
+  #section2 .slide-viewport,
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    position: relative !important; overflow: hidden !important; max-width: 100% !important;
+    width: min(100%, 100vw) !important;
+  }
+  #section1 .slider-container img,
+  #section2 .slide-viewport img,
+  #section3 .image-block img, #section3 .frame-tilt img,
+  #section4 .image-block img, #section4 .frame-tilt img,
+  #section5 .image-block img, #section5 .frame-tilt img,
+  #section6 .image-block img, #section6 .frame-tilt img,
+  #section7 .image-block img, #section7 .frame-tilt img,
+  #section8 .cards-grid .card img, #section8 .shop-card img, #section8 .item-card img {
+    width: 100% !important; height: 100% !important; object-fit: cover !important;
+  }
+}
+
+/* === Frame-Lock: 901–1100px（你特別點名過的段） === */
+@media (min-width: 901px) and (max-width: 1100px) {
+  #section1 .slider-container,
+  #section2 .slide-viewport,
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    overflow: hidden !important; max-width: 100% !important; width: min(100%, 100vw) !important;
+  }
+  #section1 .slider-container img,
+  #section2 .slide-viewport img,
+  #section3 .image-block img, #section3 .frame-tilt img,
+  #section4 .image-block img, #section4 .frame-tilt img,
+  #section5 .image-block img, #section5 .frame-tilt img,
+  #section6 .image-block img, #section6 .frame-tilt img,
+  #section7 .image-block img, #section7 .frame-tilt img,
+  #section8 .cards-grid .card img, #section8 .shop-card img, #section8 .item-card img {
+    width: 100% !important; height: 100% !important; object-fit: cover !important;
+  }
+}
+
+/* === Frame-Lock: 1101–1280px === */
+@media (min-width: 1101px) and (max-width: 1280px) {
+  #section1 .slider-container,
+  #section2 .slide-viewport,
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    position: relative !important; overflow: hidden !important; max-width: 100% !important;
+    width: min(100%, 100vw) !important;
+  }
+  #section1 .slider-container img,
+  #section2 .slide-viewport img,
+  #section3 .image-block img, #section3 .frame-tilt img,
+  #section4 .image-block img, #section4 .frame-tilt img,
+  #section5 .image-block img, #section5 .frame-tilt img,
+  #section6 .image-block img, #section6 .frame-tilt img,
+  #section7 .image-block img, #section7 .frame-tilt img,
+  #section8 .cards-grid .card img, #section8 .shop-card img, #section8 .item-card img {
+    width: 100% !important; height: 100% !important; object-fit: cover !important;
+  }
+}
+
+/* === Frame-Lock @ <=360px：所有主要圖片外框鎖住，避免超寬超高 === */
+@media (max-width: 359px) {
+  /* 外框一律成為裁切容器，寬度不超過視窗 */
+  #section1 .slider-container,
+  #section2 .slide-viewport,
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    position: relative !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    width: min(100%, 100vw) !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 內圖等比填滿外框，不外溢 */
+  #section1 .slider-container img,
+  #section2 .slide-viewport img,
+  #section3 .image-block img, #section3 .frame-tilt img,
+  #section4 .image-block img, #section4 .frame-tilt img,
+  #section5 .image-block img, #section5 .frame-tilt img,
+  #section6 .image-block img, #section6 .frame-tilt img,
+  #section7 .image-block img, #section7 .frame-tilt img,
+  #section8 .cards-grid .card img, #section8 .shop-card img, #section8 .item-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* （可選）統一 3–8 區圖塊高度，讓版面穩定 */
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt,
+  #section8 .cards-grid .card, #section8 .shop-card, #section8 .item-card {
+    height: 260px !important;
+    max-height: 260px !important;
+  }
+
+  /* —— 第二區段：彈窗地圖（超小寬度專用） —— */
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important;
+    padding: clamp(6px, 3.5vmin, 12px) !important;
+    overflow: hidden !important;
+  }
+  #s2-flyover .s2-map-panel {
+    position: relative !important;
+    width: min(94vw, 340px) !important;      /* 面板不超寬 */
+    max-width: calc(100vw - 12px) !important;
+    max-height: 94vh !important;
+    margin: auto !important;
+    display: grid !important;
+    grid-template-rows: 1fr auto !important; /* 上：地圖，下：說明 */
+    gap: 8px !important;
+    inset: auto !important;
+    transform: none !important;              /* 置中不漂移 */
+    box-sizing: border-box !important;
+  }
+  #s2-flyover .s2-map-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 48vh !important;             /* 地圖高度上限 */
+    object-fit: contain !important;
+    border-radius: 10px !important;
+  }
+  #s2-flyover .s2-map-caption {
+    max-height: 36vh !important;             /* 文字用卷軸，不擠地圖 */
+    overflow: auto !important;
+    padding: 10px 12px !important;
+    background: #ffffffd8 !important;
+    border-radius: 10px !important;
+    -webkit-overflow-scrolling: touch;
+    font-size: clamp(11px, 3.3vw, 13px) !important;
+    line-height: 1.35 !important;
+  }
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    width: 30px !important;
+    height: 30px !important;
+    z-index: 3 !important;
+  }
+  /* 保險：彈窗內所有元素不產生水平捲動 */
+  #s2-flyover * { max-width: 100% !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+
+  /* 第二區段：滑塊 caption 與右下按鈕，避免互卡與被下緣吃掉 */
+  #section2 .s2-caption {
+    position: absolute !important;
+    left: 10px !important;
+    bottom: clamp(72px, 18vmin, 140px) !important;     /* 小螢幕再高一點 */
+    max-width: 88% !important;
+    z-index: 20 !important;
+    font-size: clamp(11px, 3.3vw, 13px) !important;
+    line-height: 1.35 !important;
+  }
+  #section2 .slide-viewport > .map-btn {
+    right: 10px !important;
+    bottom: 12px !important;
+    z-index: 21 !important;
+  }
+}
+
+/* 讓 viewport 成為裁切容器 */
+#section2 .slide-viewport {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 走橫向一屏一張 */
+#section2 .slide-layer[data-gallery="section2"] {
+  display: flex;
+  gap: 0;
+  will-change: transform;
+  transition: transform .45s ease;
+}
+
+/* 每張卡片「剛好一屏」 */
+#section2 .s2-slide {
+  position: relative;
+  flex: 0 0 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* 用 aspect-ratio 撐出高度，圖片絕對定位覆蓋 */
+#section2 .s2-slide::before {     /* 基準：16:9 */
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+}
+@media (max-width: 1024px) and (min-width: 641px) { /* 平板：16:10 */
+  #section2 .s2-slide::before { padding-top: 62.5%; }
+}
+@media (max-width: 640px) {      /* 手機：4:3 */
+  #section2 .s2-slide::before { padding-top: 75%; }
+}
+@media (max-width: 360px) {      /* 超小螢幕：更高一點避免擠爆 */
+  #section2 .s2-slide::before { padding-top: 80%; }
+}
+
+/* 圖片與覆蓋元素都吃滿外框 */
+#section2 .s2-slide > img,
+#section2 .s2-slide > .s2-overlay,
+#section2 .s2-slide > .s2-caption {
+  position: absolute;
+  inset: 0;
+}
+#section2 .s2-slide > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* 不變形，超出就裁 */
+}
+
+/* === Section2：修正文字框爆滿（取消 inset:0，改為左下角小框） === */
+#section2 .s2-slide > .s2-overlay { z-index: 10 !important; }
+#section2 .s2-slide > .s2-caption {
+  position: absolute !important;
+  inset: auto !important;                         /* ← 取消撐滿 */
+  left: clamp(12px, 2.4vmin, 24px) !important;    /* 左距 */
+  bottom: clamp(14px, 3vmin, 28px) !important;    /* 下距 */
+  max-width: min(56%, 520px) !important;          /* 避免太寬 */
+  height: auto !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  display: block !important;
+  z-index: 20 !important;                         /* 蓋在 overlay 上 */
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Section2：800–1280px 左下 caption 再上提一大截 */
+@media (min-width: 875px) and (max-width: 1280px) {
+  #section2 .s2-caption{
+    left: clamp(12px, 2.4vmin, 28px) !important;
+    bottom: clamp(96px, 14vmin, 200px) !important;  /* ← 再抬更高 */
+    max-width: min(48vw, 520px) !important;
+    padding: 12px 14px !important;
+    z-index: 30 !important;
+  }
+  /* 防止撞右下按鈕，順手上提一點 */
+  #section2 .slide-viewport > .map-btn{
+    right: clamp(12px, 2.6vmin, 24px) !important;
+    bottom: clamp(24px, 3.6vmin, 36px) !important;
+    z-index: 31 !important;
+  }
+}
+
+/* 視窗偏矮（橫放平板等）時，直接改到左上，最穩 */
+@media (min-width: 875px) and (max-width: 1280px) and (max-height: 740px) {
+  #section2 .s2-caption{
+    top: clamp(14px, 3vmin, 24px) !important;
+    bottom: auto !important;
+  }
+}
+
+
+.title-block {
+  width: 100% !important; max-width: 100% !important; padding-inline: clamp(12px, 3vw, 20px) !important;
+}
+
+nav {
+  overflow-y: visible !important;
+}
+
+/* Section2：875–1280px 把幻燈片照片整體拉高 */
+@media (min-width: 875px) and (max-width: 1280px) {
+  /* 直接給 viewport 一個較高的高度 */
+  #section2 .slide-viewport {
+    height: clamp(520px, 64vh, 780px) !important;  /* 想更高就把 64vh 再調大 */
+    overflow: hidden !important;
+  }
+
+  /* 內層每張幻燈片與圖片都吃滿這個高度 */
+  #section2 .s2-slide { height: 100% !important; }
+  #section2 .s2-slide > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;  /* 不變形，超出即裁切 */
+    display: block !important;
+  }
+}
+
+

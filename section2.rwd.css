@@ -1,0 +1,673 @@
+/* ============================================================
+【可調整選項快速索引｜Section2（地景 + 地圖彈窗）】
+- 圖片高度：#section2 .s2-slide 的 --s2-height（clamp(...)）
+- 說明框字級：.s2-cap-title / .s2-cap-desc 的 font-size
+- 左右箭頭大小：#section2 .img-nav .prev/.next 的 width/height
+- 彈窗寬度：在 #s2-flyover 上加 data-w="80" 或 "90"；或調整 .s2-map-panel
+- 彈窗地圖最大高度：#section2 #s2-flyover .s2-map-img 的 max-height
+- 背景遮罩深淺：#s2-flyover 的 background rgba(...) 數值
+============================================================ */
+
+/* ============================================================
+【調整指南｜Section2 樣式】
+- 這個檔案主要控制第二區段（地景輪播 + 地圖彈窗）的外觀。
+- 想讓圖片「更高/更低」：調整 #section2 .s2-slide 的高度變數 --s2-height。
+- 想改左下角說明框字級：調整 .s2-cap-title / .s2-cap-desc 的 font-size。
+- 想縮小/放大左右箭頭：調整 .img-nav .prev/.next 的寬高。
+- 想讓彈窗面板更寬：調整 #s2-flyover[data-w="80|90"] 或 .s2-map-panel 的 CSS。
+============================================================ */
+
+/* === Cleaned & De-duplicated (keep latest per selector) — 2025-09-15 === */
+
+#section2 .slide-viewport {
+	position: relative !important;
+	aspect-ratio: 16/9 !important;
+	border-radius: 12px !important;
+	overflow: hidden !important;
+}
+#section2 .s2-slide {
+	position: relative !important;
+	width: 100% !important;
+	height: var(--s2-height, clamp(300px, 62vw, 620px)) !important;
+}
+#section2 .s2-slide>img, #section2 .frame-tilt .slide-layer img {
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover !important;
+	object-position: center center !important;
+	display: block !important;
+	border-radius: 12px !important;
+}
+#section2 .s2-caption {
+	position: absolute !important;
+	left: 10px !important;
+	bottom: 10px !important;
+	z-index: 6 !important;
+	max-width: min(72%, 520px) !important;
+	padding: 6px 10px !important;
+	color: #111827 !important;
+	background: rgba(255, 255, 255, .82) !important;
+	-webkit-backdrop-filter: blur(2px) !important;
+	backdrop-filter: blur(2px) !important;
+	border-radius: 8px !important;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, .15) !important;
+}
+#section2 .s2-cap-title {
+	margin: 0 0 1px 0 !important;
+	font-size: clamp(12px, 1.1vw, 14px) !important;
+	font-weight: 700 !important;
+}
+#section2 .s2-cap-desc {
+	margin: 0 !important;
+	font-size: clamp(11px, 1vw, 13px) !important;
+	line-height: 1.35 !important;
+	opacity: .9 !important;
+}
+#section2 .slide-viewport>.map-btn {
+	position: absolute !important;
+	right: clamp(8px, 1.6vmin, 16px) !important;
+	bottom: clamp(8px, 1.6vmin, 16px) !important;
+	top: auto !important;
+	left: auto !important;
+	z-index: 12 !important;
+	pointer-events: auto !important;
+}
+#section2 .img-nav {
+	position: absolute !important;
+	inset: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	padding: 0 clamp(8px, 2vw, 20px) !important;
+	pointer-events: none !important;
+	z-index: 9 !important;
+}
+#section2 .img-nav .prev, #section2 .img-nav .next {
+	position: absolute !important;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
+	bottom: auto !important;
+	pointer-events: auto !important;
+	width: clamp(36px, 4.6vmin, 52px) !important;
+	height: clamp(36px, 4.6vmin, 52px) !important;
+	border: none !important;
+	background: none !important;
+	display: grid !important;
+	place-items: center !important;
+	transition: transform .2s ease, opacity .2s ease !important;
+	opacity: .9 !important;
+}
+#section2 .img-nav .prev:hover, #section2 .img-nav .next:hover {
+	transform: translateY(-50%) scale(1.15) !important;
+	opacity: 1 !important;
+}
+#section2 .img-nav .prev {
+	left: clamp(8px, 2.4vmin, 20px) !important;
+	right: auto !important;
+}
+#section2 .img-nav .next {
+	right: clamp(8px, 2.4vmin, 20px) !important;
+	left: auto !important;
+}
+#section2 .img-nav .prev .arrow, #section2 .img-nav .next .arrow, #section2 .img-nav .prev svg, #section2 .img-nav .next svg, #section2 .img-nav .prev i, #section2 .img-nav .next i {
+	width: 60% !important;
+	height: 60% !important;
+	font-size: clamp(14px, 2.4vmin, 20px) !important;
+	color: #fff;
+	filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .35));
+}
+#section2 .map-btn {
+	position: absolute !important;
+	right: 0 !important;
+	bottom: 16px !important;
+	z-index: 20 !important;
+}
+#section2 {
+	position: relative !important;
+}
+#section2 #section2 #s2-flyover .s2-map-img {
+	width: 100% !important;
+	height: auto !important;
+	max-height: 64vh !important;
+	object-fit: contain !important;
+	border-radius: 10px !important;
+	display: block !important;
+}
+#section2 #s2-flyover .s2-map-caption {
+	background: rgba(255, 255, 255, .95) !important;
+	border-radius: 10px !important;
+	padding: 10px 12px !important;
+	overflow: auto !important;
+	max-height: 28vh !important;
+}
+#section2 #s2-flyover .s2-modal__close {
+	position: absolute !important;
+	top: 8px !important;
+	right: 8px !important;
+	width: 32px !important;
+	height: 32px !important;
+	border-radius: 999px !important;
+	background: rgba(255, 255, 255, .9) !important;
+	border: 1px solid rgba(0, 0, 0, .08) !important;
+	display: grid !important;
+	place-items: center !important;
+	font-size: 18px !important;
+	line-height: 1 !important;
+	cursor: pointer !important;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, .12) !important;
+	z-index: 2 !important;
+}
+#section2 .image-block {
+	--s2-btn-gap: 72px;
+}
+#section2 #s2-flyover {
+	position: absolute !important;
+	inset: 0 !important;
+	display: none;
+	place-items: center !important;
+	background: rgba(0, 0, 0, .18) !important;
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+	border-radius: inherit !important;
+	z-index: 60 !important;
+}
+#section2 #s2-flyover:not(.hidden) {
+	display: grid !important;
+}
+/* removed conflicting desktop panel sizing (replaced by patch below) */
+#s2-flyover {
+	position: fixed !important;
+	inset: 0 !important;
+	display: grid !important;
+	place-items: center !important;
+	background: rgba(17, 24, 39, .56) !important;
+	z-index: 9998 !important;
+	padding: 16px !important;
+}
+#s2-flyover .s2-map-caption .cap-title {
+	font-size: 14px !important;
+	font-weight: 700 !important;
+	margin: 0 0 2px !important;
+}
+#s2-flyover .s2-map-caption .cap-desc {
+	font-size: 12px !important;
+	line-height: 1.5 !important;
+	margin: 0 !important;
+}
+#s2-flyover .s2-modal__close {
+	position: absolute !important;
+	top: -10px !important;
+	right: -10px !important;
+	width: 28px !important;
+	height: 28px !important;
+	border-radius: 999px !important;
+	background: #fff !important;
+	border: 1px solid #e5e7eb !important;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, .12) !important;
+	z-index: 9999 !important;
+}
+#s2-flyover:not(.hidden) {
+	display: grid !important;
+}
+#s2-flyover.hidden {
+	display: none !important;
+}
+#s2-flyover[data-w="80"] .s2-map-panel {
+	--s2-panel-w: 80vw;
+}
+#s2-flyover[data-w="90"] .s2-map-panel {
+	--s2-panel-w: 90vw;
+}
+#s2-flyover .s2-map-panel {
+	display: grid !important;
+	grid-template-rows: auto auto !important;
+	/* 上：地圖；下：caption */
+	gap: 12px !important;
+	/* 地圖與文字的間距 */
+	height: auto !important;
+	/* 讓面板隨內容長高 */
+	max-height: 90vh !important;
+	/* 仍不超出黑底 */
+	overflow: hidden !important;
+	background: #fff !important;
+	border-radius: 14px !important;
+	padding: 12px 14px 14px !important;
+	box-shadow: 0 16px 48px rgba(0, 0, 0, .25) !important;
+	/* 兩個可調變數：桌機預設比例 */
+	--s2-map-max: 68vh;
+	/* 地圖最大高度（維持固定上限） */
+	--s2-cap-max: 20vh;
+	/* caption 最大高度（超過就捲動） */
+}
+/* 地圖高度固定上限，與 caption 無關 */
+
+#s2-flyover .s2-map-img {
+	width: 100% !important;
+	height: auto !important;
+	max-height: var(--s2-map-max) !important;
+	object-fit: contain !important;
+	border-radius: 10px !important;
+	display: block !important;
+	margin: 0 auto !important;
+}
+/* caption 可以變高，但到上限會出現卷軸，不會擠壓地圖 */
+
+#s2-flyover .s2-map-caption {
+	width: 100% !important;
+	max-height: var(--s2-cap-max) !important;
+	overflow: auto !important;
+	margin: 0 !important;
+	padding: 10px 12px !important;
+	background: #ffffff8e !important;
+	border-radius: 10px !important;
+	left: 0;
+}
+@media (max-width: 640px) {
+	#section2 .s2-slide {
+		height: var(--s2-height-sm, clamp(220px, 72vw, 440px)) !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 .slide-viewport {
+		position: relative !important;
+		height: var(--s2-height-sm, clamp(220px, 72vw, 440px)) !important;
+		overflow: hidden !important;
+	}
+	#section2 .img-nav {
+		position: absolute !important;
+		inset: 0 !important;
+		height: 100% !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: space-between !important;
+		pointer-events: none !important;
+		z-index: 9 !important;
+	}
+	#section2 .img-nav .prev, #section2 .img-nav .next {
+		position: absolute !important;
+		top: 50% !important;
+		transform: translateY(-50%) !important;
+		pointer-events: auto !important;
+	}
+	#section2 .s2-caption {
+		display: block !important;
+		z-index: 6 !important;
+		left: 10px !important;
+		bottom: 10px !important;
+	}
+	#section2 .slide-viewport>.map-btn {
+		right: 12px !important;
+		bottom: 12px !important;
+		top: auto !important;
+		left: auto !important;
+		z-index: 12 !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 .slide-viewport {
+		width: min(88vw, 560px) !important;
+		max-width: 100% !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+	#section2 .slide-viewport img {
+		width: 100% !important;
+		height: 100% !important;
+		object-fit: cover !important;
+		display: block !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 .map-btn {
+		position: relative !important;
+		display: inline-block !important;
+		margin-top: 8px !important;
+		right: auto !important;
+		bottom: 16px !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 {
+		position: relative;
+	}
+	#section2 .map-btn {
+		position: absolute !important;
+		right: 0.5rem !important;
+		bottom: 16px !important;
+		margin: 0 !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 .slide-viewport {
+		margin-bottom: var(--s2-btn-gap, 48px) !important;
+		position: relative !important;
+	}
+	#section2 .map-btn {
+		position: absolute !important;
+		right: 12px !important;
+		bottom: 16px !important;
+		left: auto !important;
+		top: auto !important;
+		margin: 0 !important;
+		z-index: 12 !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 {
+		position: relative;
+		padding-bottom: 3.5rem;
+	}
+	#section2 .map-btn {
+		position: absolute !important;
+		right: 0.5rem !important;
+		bottom: 16px !important;
+		margin: 0 !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 {
+		--s2-btn-gap: 48px;
+	}
+}
+@media (max-width: 640px) {
+	#section2 .image-block {
+		padding-bottom: 52px !important;
+	}
+	#section2 .map-btn {
+		bottom: 16px !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 #section2 #s2-flyover .s2-map-img {
+		max-height: 56vh !important;
+	}
+	#section2 #s2-flyover .s2-map-caption {
+		max-height: 30vh !important;
+	}
+}
+@media (max-width: 640px) {
+	#section2 .image-block {
+		--s2-btn-gap: 5.5rem;
+	}
+}
+@media (max-width: 640px) {
+	#s2-flyover {
+		padding: 14px !important;
+	}
+	#s2-flyover .s2-map-panel {
+		width: min(82vw, 720px) !important;
+		max-height: 72vh !important;
+		height: 36vh !important;
+	}
+	#s2-flyover .s2-map-img {
+		width: min(82vw, 720px) !important;
+		max-height: 72vh !important;
+	}
+	#s2-flyover .s2-map-caption {
+		width: min(82vw, 720px) !important;
+		position: relative !important;
+		left: -20px !important;
+		top: -20px !important;
+	}
+	#s2-flyover .s2-map-caption .cap-title {
+		font-size: 11px !important;
+	}
+	#s2-flyover .s2-map-caption .cap-desc {
+		font-size: 9px !important;
+	}
+}
+
+/* === Patch: 2025-09-27 Fix desktop modal sizing & prevent overflow === */
+#s2-flyover {
+  position: fixed !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  background: rgba(17, 24, 39, .56) !important;
+  z-index: 9998 !important;
+  padding: 16px !important;
+}
+
+#s2-flyover .s2-map-panel {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: min(96vw, 960px) !important;
+  height: auto !important;
+  max-height: 88vh !important;
+  background: #fff !important;
+  border-radius: 14px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,.25) !important;
+  display: grid !important;
+  grid-template-rows: auto 1fr !important;
+  gap: 10px !important;
+  padding: 12px !important;
+  overflow: hidden !important;
+}
+
+#s2-flyover .s2-map-img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 64vh !important;
+  object-fit: contain !important;
+  border-radius: 10px !important;
+  display: block !important;
+}
+
+#s2-flyover .s2-map-caption {
+  background: rgba(255, 255, 255, .95) !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  overflow: auto !important;
+  max-height: 20vh !important;
+}
+
+/* Close button keep visible */
+#s2-flyover .s2-modal__close {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.9) !important;
+  border: 1px solid rgba(0,0,0,.08) !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12) !important;
+  z-index: 2 !important;
+}
+
+
+/* === Mobile patch: ensure modal fits small screens === */
+@media (max-width: 640px) {
+  #s2-flyover {
+    padding: 10px !important;
+  }
+  #s2-flyover .s2-map-panel {
+    width: 96vw !important;
+    max-height: 92vh !important;
+    padding: 10px !important;
+    border-radius: 12px !important;
+  }
+  #s2-flyover .s2-map-img {
+    max-height: 68vh !important;
+  }
+  #s2-flyover .s2-map-caption {
+    max-height: 22vh !important;
+    padding: 8px 10px !important;
+  }
+  #s2-flyover .s2-modal__close {
+    top: 6px !important;
+    right: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+
+/* === Mobile center fix: vertically & horizontally center modal === */
+@media (max-width: 640px) {
+  #s2-flyover {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+  }
+  #s2-flyover .s2-map-panel {
+    margin: auto !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
+}
+
+
+/* === Adaptive sizing for various mobile aspect ratios === */
+@media (max-width: 640px) {
+  #s2-flyover .s2-map-panel {
+    /* Panel occupies viewport safely */
+    width: 94vw !important;
+    max-height: 92vh !important;
+    /* Let image flex, caption auto */
+    display: grid !important;
+    grid-template-rows: 1fr auto !important;
+    gap: 8px !important;
+  }
+  #s2-flyover .s2-map-img {
+    /* Fill available space while keeping aspect */
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    object-fit: contain !important;
+  }
+  #s2-flyover .s2-map-caption {
+    max-height: 28vh !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Very short screens (e.g., landscape phones) */
+@media (max-height: 460px) {
+  #s2-flyover {
+    padding: 6px !important;
+  }
+  #s2-flyover .s2-map-panel {
+    width: 96vw !important;
+    max-height: 94vh !important;
+    grid-template-rows: 1fr auto !important;
+    padding: 8px !important;
+  }
+  #s2-flyover .s2-map-caption {
+    max-height: 32vh !important;
+    font-size: 0.85rem !important;
+  }
+  #s2-flyover .s2-modal__close {
+    width: 26px !important;
+    height: 26px !important;
+  }
+}
+
+/* === 桌機專用：修正 Section2 地圖彈窗水平垂直置中 === */
+@media (min-width: 1024px) {
+  #s2-flyover .s2-map-panel {
+    width: clamp(720px, 70vw, 860px) !important;
+    height: auto !important;
+    max-height: 88vh !important;
+    margin: auto !important;      /* 自動置中 */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important; /* 保證整體垂直水平置中 */
+  }
+}
+
+/* === Section2 手機板：地圖彈窗置中＋縮小＋不碰邊 === */
+@media (max-width: 640px) {
+  /* 黑底：留安全邊距，並用 Grid 置中面板 */
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important;                    /* 水平＋垂直置中 */
+    padding: clamp(10px, 4vw, 16px) !important;        /* 邊緣緩衝，不貼邊框 */
+  }
+
+  /* 面板：用 clamp 控寬、高度封頂，整體縮小 */
+  #s2-flyover .s2-map-panel {
+    width: min(80vw, 300px) !important;                /* 小於視窗寬，保留邊距 */
+    max-height: 110% !important;                       /* 不超過視窗高度 */
+    border-radius: 12px !important;
+    padding: 10px 10px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    overflow: hidden !important;                       /* 由內部區塊負責捲動 */
+    margin: 0 auto !important;                         /* 保底置中 */
+  }
+
+  /* 地圖圖像：維持可視、別把文字擠爆 */
+  #s2-flyover .s2-map-img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: clamp(220px, 56vh, 64vh) !important;   /* 上界：避免太高 */
+    object-fit: contain !important;
+    border-radius: 10px !important;
+    display: block !important;
+  }
+
+  /* 文字區：有上限，內容多就捲動 */
+  #s2-flyover .s2-map-caption {
+    max-height: clamp(120px, 22vh, 26vh) !important;   /* 下半部不超出 */
+    overflow: auto !important;
+    background: rgba(255,255,255,.95) !important;
+    border-radius: 10px !important;
+    padding: 10px 12px !important;
+  }
+
+  /* 字級在小螢幕更耐看 */
+  #s2-flyover .s2-map-caption .cap-title {
+    font-size: clamp(13px, 3.6vw, 16px) !important;
+    font-weight: 700 !important;
+    margin: 0 0 2px !important;
+  }
+  #s2-flyover .s2-map-caption .cap-desc {
+    font-size: clamp(12px, 3.2vw, 14px) !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+
+  /* 關閉鍵：放內側，不會跑出框外 */
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 6px !important;
+    right: 6px !important;
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 999px !important;
+  }
+}
+
+/* === Section2：讓容器以「一屏一張」水平排列，位移以容器寬計 === */
+#section2 .slide-viewport {
+  overflow: hidden;            /* 擋溢位，避免看到左右白邊 */
+  position: relative;
+}
+
+#section2 .slide-layer[data-gallery="section2"]{
+  display: flex;               /* 橫向排 */
+  width: 100%;                 /* 讓百分比以視口寬為基準 */
+  transition: transform .45s ease;  /* 平滑切換 */
+  will-change: transform;
+}
+
+/* 一張佔滿一屏（這條你檔案已經有，但補一條保險） */
+#section2 .s2-slide{ flex: 0 0 100%; }
+

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width,initial-scale=1.0" name="viewport">
+	<title>菱潭街 - 歷史與重生的街區</title>
+	<script src="https://cdn.tailwindcss.com">
+	</script>
+	<link href="style.css" rel="stylesheet">
+  <link href="section2.rwd.css" rel="stylesheet">
+  <link href="tablet.rwd.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com" rel="preconnect">
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&amp;display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&amp;display=swap" rel="stylesheet">
+</head>
+<!--
+============================================================
+【編輯指南｜給不會寫程式的人】
+你可以用這份檔案改「首頁輪播圖」、「第二區段的地景彈窗文字與地圖圖檔」
+以及第3~7區段的標題與內文。以下有就地標示：
+- 【首頁輪播圖】：找到 <section id="section1"> 裡的 <img class="slide">，改 src 與 alt。
+- 【第二區段地景輪播】：圖片與左下角說明框不是在這裡改，請去 section2.js 裡的 IMGS 陣列更改。
+- 【地圖彈窗內容】：在 <div id="s2-flyover"> 裡改地圖圖片、標題與描述。
+- 【第3~7區段】：直接改 <h2> 標題、<p> 內文與 <img src> 圖片。
+- 【第8區段商家卡片】：不在這裡改，請去 script.js 的 stores 陣列。
+============================================================
+-->
+<body class="bg-gray-100 px-4 sm:px-6 lg:px-8">
+<!--
+============================================================
+【一頁總覽｜怎麼改文字與圖片（從 HTML 到 JS）】
+- LOGO：<nav> 內的 <img class="logo"> → 改 src（檔名）與 alt（無障礙描述）。
+- 導覽選單文字：<nav> 內的多個 <a href="#sectionX">文字</a> 直接改字。
+- 手機選單：同樣在 <div id="mobileMenu"> 內的 <a> 直接改字。
+- 【首頁輪播圖】<section id="section1"> → 三張 <img class="slide"> 改 src 與 alt；張數要變更請到 script.js 的輪播程式段調整（或維持三張）。
+- 【第二區段｜地景輪播】圖片與左下角說明框不在 HTML 改，在 section2.js 的 IMGS 陣列改（src / title / desc）。
+- 【第二區段｜地圖彈窗】在 <div id="s2-flyover"> 裡：
+    · 圖片：<img class="s2-map-img"> 的 src
+    · 標題：<strong class="cap-title">…</strong>
+    · 敘述：<p class="cap-desc">…</p>
+- 【第 3～7 區段】標題與內文直接改 <h2> / <p>；圖片改 <img src>。
+- 【第 8 區段｜店鋪卡片】內容不在 HTML 改，在 script.js 的 stores 陣列（名稱、時間、描述、照片）。
+- RWD（手機/平板細節）主要在 section2.rwd.css 與 tablet.rwd.css；電腦版共用樣式在 style.css。
+============================================================
+-->
+
+	
+	<nav class="fixed top-0 left-0 w-auto bg-white shadow z-50">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="flex items-center justify-between h-16">
+      <!-- LOGO：換圖請改下行 src；替代文字在 alt -->
+<a class="flex items-center h-full" href="#section1">
+        <img alt="網站 Logo" class="logo h-10 md:h-12 lg:h-14 object-contain" src="./img/LOGO-01.png">
+      </a>
+
+      
+      <div class="hidden md:flex items-center gap-6">
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section1">主頁</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section2">龍潭地圖</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section3">曾經</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section4">落寞</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section5">活化</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section6">現今</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section7">未來</a>
+        <a class="text-gray-700 hover:text-blue-500 text-sm" href="#section8">店鋪</a>
+      </div>
+
+      
+      <div class="md:hidden">
+        <button id="navToggle" aria-label="開啟選單" aria-expanded="false" class="p-2 rounded-md focus:outline-none">
+          <svg class="w-6 h-6 text-gray-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12h18M3 6h18M3 18h18"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    
+    <!-- 手機選單：直接改每個 <a> 的文字即可（連結維持對應 #sectionX） -->
+<div id="mobileMenu" class="md:hidden hidden pb-3">
+      <div class="flex flex-col px-2 space-y-1">
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section1">主頁</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section2">龍潭地圖</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section3">曾經</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section4">落寞</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section5">活化</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section6">現今</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section7">未來</a>
+        <a class="block px-3 py-2 rounded text-gray-700 hover:bg-gray-50" href="#section8">店鋪</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+	<!-- ★【首頁輪播圖】在下方 <img class="slide"> 改換圖片：修改 src 與 alt 文字；若想增減張數，維持相同 class="slide" 結構即可（自動撥放在 script.js 中控制）。 -->
+<section class="pt-20" id="section1">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="slider-container relative aspect-[16/9] max-h-[640px] overflow-hidden rounded-xl bg-gray-200">
+      
+      <!-- 修改這張圖：把 src 換成你的圖片檔名，alt 換成圖片描述 -->
+<img alt="圖1" class="slide opacity-100 absolute inset-0 w-full h-full object-cover" src="./img/1.jpg">
+      <img alt="圖2" class="slide opacity-0 absolute inset-0 w-full h-full object-cover" src="./img/2.jpg">
+      <img alt="圖3" class="slide opacity-0 absolute inset-0 w-full h-full object-cover" src="./img/3.jpg">
+      
+    </div>
+
+    
+    <div class="hero-hover-overlay pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300">
+      <div class="overlay-inner px-6 py-8 text-center">
+        <div class="overlay-text text-white font-extrabold text-3xl md:text-4xl leading-tight"></div>
+      </div>
+    </div>
+
+    <div class="title-block mt-6 text-right">
+      <h1 class="first-title font-bold text-gray-900 text-3xl md:text-4xl">菱潭街興創基地</h1>
+      <p class="second-title text-gray-600 mt-2 text-base md:text-lg">承載記憶、見證變遷、持續再生</p>
+    </div>
+  </div>
+</section>
+	
+<section id="section2" class="section section-two bg-white/60">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="title-block mt-2 mb-4 text-left">
+      <h2 class="first-title font-bold text-gray-900 text-3xl md:text-4xl">龍潭地景</h2>
+    </div>
+
+    <div class="image-block">
+      <figure class="frame-tilt">
+        <div class="slide-viewport rounded-xl relative">
+  <div class="slide-layer" data-gallery="section2"></div><!-- === Section2 地圖：就地覆蓋 flyover === -->
+<!-- ★【第二區段｜地圖彈窗內容】改地圖圖檔、標題與敘述：見下方 .s2-map-img / .cap-title / .cap-desc -->
+<div id="s2-flyover" class="s2-flyover hidden" role="dialog" aria-modal="true" aria-labelledby="s2-map-title">
+  <div class="s2-map-panel" tabindex="-1">
+    <button class="s2-modal__close" aria-label="關閉">&times;</button>
+    <!-- 地圖主圖｜把 src 換成你的地圖圖片檔案路徑（例如 ./img/my_map.jpg） -->
+<img src="./img/s2_map.jpg" alt="龍潭地景地圖" class="s2-map-img">
+    <div class="s2-map-caption">
+      <!-- 彈窗標題文字｜直接改內文 -->
+<strong class="cap-title">龍潭地景導覽</strong>
+      <!-- 彈窗描述文字｜直接改內文段落 -->
+<p class="cap-desc">沿著菱潭街一路走，老屋、巷弄與大池的水紋交錯；把時間放慢，故事就會自己浮上來。</p>
+    </div>
+  </div>
+</div>
+<!-- === /Section2 地圖：就地覆蓋 flyover === -->
+
+  <div class="img-nav">
+    <button class="prev" aria-label="上一張"><span class="arrow"></span></button>
+    <button class="next" aria-label="下一張"><span class="arrow"></span></button>
+  </div>
+
+  <!-- 新增按鈕 -->
+  
+</div>
+  <button class="map-btn">
+    查看龍潭地景地圖
+  </button>
+</div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+			
+			<!-- ★【第3~7區段｜圖文內容】改 <h2> 標題、<p> 內文、<img src> 圖片 -->
+<section class="section story" data-theme="prosper" id="section3">
+				<div class="text-image-wrap layout-sash max-[1024px]:flex-col max-[900px]:flex-col max-[1100px]:flex-col max-[1100px]:items-start max-[1100px]:gap-4">
+					<div class="text-block max-[900px]:order-1 max-[1100px]:order-1">
+						<h2 class="fancy-title theme-prosper">繁榮 — 熱鬧與人潮的記憶</h2>
+						<p>在過去的日子裡，菱潭街是龍潭最亮眼的一條街。白天攤販沿街而立， 水果、布料、手工器皿的叫賣聲此起彼落，人潮在狹長的街道上來回穿梭， 熱鬧景象幾乎不曾停歇。</p>
+						<p>入夜後，霓虹燈閃耀，戲院門口擠滿了等待入場的觀眾，茶館裡談天說地， 大人小孩都在這裡找到自己的位置。街上的光與聲，讓人覺得龍潭的夜晚比白天更熱鬧。</p>
+						<p>當時的菱潭街不僅是買賣交易的地方，更是人情往來的舞台。 鄰里間常在巷口閒聊，店家老闆熟記常客的口味， 一句招呼就能拉近彼此的距離。這裡承載著居民的日常與夢想。</p>
+						<p>那段繁盛的時光，如同一本翻不盡的日記，每翻開一頁都能聽見街頭的故事。 菱潭街曾是龍潭的心臟，隨著人潮一起跳動著，將活力傳遞到整座城鎮。</p>
+					</div>
+					<div class="image-block max-[900px]:order-2 max-[1100px]:order-2">
+						<figure class="frame-tilt">
+							<img alt="菱潭街繁榮景象" src="./img/3_1.jpg">
+						</figure>
+					</div>
+				</div>
+			</section>
+			<section class="section story" data-theme="abandon" id="section4">
+				<div class="text-image-wrap layout-quote max-[1024px]:flex-col max-[900px]:flex-col max-[1100px]:flex-col max-[1100px]:items-start max-[1100px]:gap-4">
+					<div class="text-block max-[900px]:order-1 max-[1100px]:order-1">
+						<h2 class="fancy-title theme-abandon">廢棄 — 時光停格的縫隙</h2>
+						<blockquote class="pull-quote">
+							「空不是消失，而是在等待新句子。」
+						</blockquote>
+						<p>隨著產業轉移與交通重心的改變，菱潭街逐漸失去了往日的榮光。 鐵捲門緊閉，曾經閃亮的招牌因日曬雨淋而褪色， 空蕩的街面只剩風聲與落葉。</p>
+						<p>與其說是衰敗，不如說是時間在這裡停格。 曾經熱鬧的角落，如今成了無聲的見證， 記錄著一座城鎮的變遷與沉默。</p>
+						<p>雖然冷清，但這段靜止，也讓人有機會回望過去。 斑駁的牆面與剝落的油漆，成了歷史留給街區的印記， 提醒人們這裡曾經的繁盛。</p>
+						<p>空白並不是結束，而是下一個篇章的起點。 在沉寂中，街區彷彿在等待新的句子被寫入。</p>
+					</div>
+					<div class="image-block max-[900px]:order-2 max-[1100px]:order-2">
+						<figure class="mono-tall">
+							<img alt="廢棄的菱潭街店鋪" src="./img/4-1.jpg">
+						</figure>
+					</div>
+				</div>
+			</section>
+			<section class="section story" data-theme="renew" id="section5">
+				<div class="text-image-wrap layout-card max-[1024px]:flex-col max-[900px]:flex-col max-[1100px]:flex-col max-[1100px]:items-start max-[1100px]:gap-4">
+					<div class="text-block soft-card max-[900px]:order-1 max-[1100px]:order-1">
+						<h2 class="fancy-title theme-renew">活化 — 老屋新生的工法</h2>
+						<p>轉折點出現在一群人願意走進來的時候。 他們看見的不只是殘破，而是有機會重生的骨架。 舊磚、木樑被悉心保留，新的玻璃、燈光與設計元素帶進活力。</p>
+						<p>活化後的菱潭街逐漸有了不同的樣貌。 市集、展演、手作課程在街區展開， 讓人們重新回到這裡，也重新認識這裡。</p>
+						<p>老屋不再只是靜靜矗立，而是承載新的故事。 青年創業者、在地藝術家、社區工作坊都進駐其中， 為這條街注入新能量。</p>
+						<p>從沉寂到復甦，菱潭街用自己的方式示範了「老屋新生」。 它不是否定過去，而是在過去的基礎上生長出新的可能。</p>
+					</div>
+					<div class="image-block max-[900px]:order-2 max-[1100px]:order-2">
+						<figure class="sticker">
+							<img alt="活化後的菱潭街店面" src="./img/5-1.jpg">
+						</figure>
+					</div>
+				</div>
+			</section>
+			<section class="section story" data-theme="now" id="section6">
+				<div class="text-image-wrap layout-band max-[1024px]:flex-col max-[900px]:flex-col max-[1100px]:flex-col max-[1100px]:items-start max-[1100px]:gap-4">
+					<div class="text-block max-[900px]:order-1 max-[1100px]:order-1">
+						<h2 class="fancy-title theme-now">現在 — 日常流動的當下</h2>
+						<p>今天走在菱潭街，氣氛與昔日已大不相同。少了過去的喧囂，卻多了一份閒適。 清晨時分，可以看到居民沿著大池散步，呼吸著帶著水氣的空氣， 開啟一天的平靜節奏。</p>
+						<p>午後的咖啡館，是旅人和在地人都愛駐足的角落。 陽光從老屋翻新的窗戶灑進來，照在木桌上， 人們邊品味咖啡邊聊天，時間在這裡彷彿慢了下來。</p>
+						<p>傍晚時分，街道上的燈光倒映在水面，微風帶來涼意， 不同於昔日熱鬧的夜市，現在的菱潭街更像是一種陪伴， 靜靜守候著居民的日常，也溫柔迎接來訪的旅客。</p>
+						<p>這條街雖然已不再是最熱鬧的中心，卻成了能讓人放鬆腳步的所在。 菱潭街的「現在」，是一種新的節奏，沒有過度張揚， 卻讓人走過時，能感受到生活中最真實的溫度。</p>
+					</div>
+					<div class="image-block max-[900px]:order-2 max-[1100px]:order-2">
+						<figure class="circle-photo">
+							<img alt="菱潭街的日常" src="./img/6-2.jpg">
+						</figure>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<section class="section story" data-theme="future" id="section7">
+		<div class="text-image-wrap layout-band max-[1024px]:flex-col max-[1100px]:flex-col max-[1100px]:items-start max-[1100px]:gap-4">
+			<div class="text-block max-[1100px]:order-1">
+				<h2 class="fancy-title theme-now">未來 — 下一階段的想像</h2>
+				<p>菱潭街的下一步，不是回頭複製過去的熱鬧，而是在日常與文化之間找到新的平衡。 我們期待更多以社區為核心的展演、共學與手作，在舊宅裡慢慢長出。</p>
+				<p>「街」是容器，也是舞台。未來的活動將更強調參與與連結： 讓居民與旅人一起動手、一起說故事，讓創作不是表演，而是共同生活的一部分。</p>
+				<p>隨著更多店家進駐與協作，菱潭街的網絡會更緊密。 每一家店都是據點，彼此串起散步的動線與節慶的節奏， 讓人走過時，能看見地方持續更新的光。</p>
+				<p>隨著更多店家進駐與協作，菱潭街的網絡會更緊密。 每一家店都是據點，彼此串起散步的動線與節慶的節奏， 讓人走過時，能看見地方持續更新的光。</p>
+			</div>
+			<div class="image-block max-[1100px]:order-2">
+				<figure class="frame-tilt">
+					<img alt="菱潭街未來想像" src="./img/7-1.jpg">
+				</figure>
+			</div>
+		</div>
+	</section>
+	
+	<section class="section section-gallery" id="section8">
+		<div class="shop-gallery-inner">
+			<h2 class="shop-gallery-title">菱潭街上的野菱人們</h2>
+			<div class="shop-gallery-strip">
+				<button aria-label="上一頁" class="shop-nav prev" type="button"><span class="arrow"></span></button>
+				<div aria-live="polite" class="shop-viewport max-[1024px]:overflow-hidden">
+					<ul aria-label="店鋪圖像列表" class="shop-grid grid grid-cols-2 max-[640px]:grid-cols-1 gap-4 max-[1024px]:grid max-[1024px]:grid-rows-2 max-[1024px]:gap-4 max-[1024px]:block" data-page="0" id="shopGrid"></ul>
+				</div><button aria-label="下一頁" class="shop-nav next" type="button"><span class="arrow"></span></button>
+			</div>
+			<div aria-hidden="true" class="shop-page-indicator" id="shopPageIndicator"></div>
+		</div>
+		<div aria-hidden="true" class="shop-modal" id="shopModal" role="dialog">
+			<button aria-label="關閉" class="shop-modal-close" id="shopModalClose">×</button>
+			<div class="shop-modal-body">
+				<div aria-label="店鋪照片幻燈片" class="shop-slider" id="shopSlider">
+					<div class="shop-slide-track" id="shopSlideTrack"></div>
+					<div aria-hidden="true" class="shop-slide-dots" id="shopSlideDots"></div>
+				</div>
+				<div class="shop-modal-text">
+					<h3 class="shop-modal-title" id="shopModalTitle">—</h3>
+					<p class="shop-modal-sub" id="shopModalSubtitle"></p>
+					<p class="shop-modal-desc" id="shopModalDesc"></p>
+					<p class="shop-modal-hours" id="shopModalHours"></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer class="site-footer">
+  <div class="footer-inner">
+    
+    <!-- Logo -->
+    <div class="footer-logo">
+      <a href="#section1">
+        <img src="./img/LOGO-01.png" alt="菱潭街 Logo">
+      </a>
+    </div>
+
+    <!-- 聯絡我們 -->
+    <div class="footer-contact">
+      <h4>聯絡我們</h4>
+      <p>電話：<a href="tel:03-1234567">03-1234567</a></p>
+      <p>Email：<a href="mailto:lingtanstreet@gmail.com">lingtanstreet@gmail.com</a></p>
+    </div>
+
+    <!-- 追蹤我們 -->
+    <div class="footer-social" aria-labelledby="follow-us-title">
+      <h4 id="follow-us-title">追蹤我們</h4>
+      <ul class="social-qr-list">
+        <li>
+          <figure class="social-qr">
+            <img src="/img/fb.png" alt="Facebook QR code" class="social-qr-img">
+            <figcaption class="social-qr-text">
+              <a href="https://www.facebook.com/lingtanstreet">Facebook</a>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="social-qr">
+            <img src="./img/ig.png" alt="Instagram QR code" class="social-qr-img">
+            <figcaption class="social-qr-text">
+              <a href="https://www.instagram.com/lingtanstreet/">Instagram</a>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 菱潭街. All Rights Reserved.</p>
+  </div>
+</footer>
+
+	<script src="script.js">
+	</script>
+	<script src="section2.js">
+	</script>
+  <!-- <script src="section8.js">
+	</script> -->
+    <script>
+  (function(){
+    const btn = document.getElementById('navToggle');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden') === false;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // close mobile menu on link click (improve UX)
+    menu.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'a') menu.classList.add('hidden');
+    });
+  })();
+</script>
+</body>
+</html>
