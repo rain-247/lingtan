@@ -43,17 +43,17 @@ const IMGS = [
   ];
 
   // 生成每張卡片（圖 + 左下角說明框）
-  layer.innerHTML = IMGS.map(item => `
-    <div class="s2-slide">
-      <img src="${item.src}" alt="${item.title}">
-      <div class="s2-caption" role="note" aria-label="${item.title}">
-        <h3 class="s2-cap-title">${item.title}</h3>
-        <p class="s2-cap-desc">${item.desc}</p>
-      </div>
+  
+layer.innerHTML = IMGS.map((item) => `
+  <div class="s2-slide">
+    <img src="${item.src}" alt="${item.title}">
+    <div class="s2-caption" role="note" aria-label="${item.title}">
+      <h3 class="s2-cap-title">${item.title}</h3>
+      <p class="s2-cap-desc">${item.desc}</p>
     </div>
-  `).join('');
-
-  let index = 0;
+  </div>
+`).join('');
+let index = 0;
   function go(i){
     index = (i + IMGS.length) % IMGS.length;
     layer.style.transform = `translateX(${-index * 100}%)`;
@@ -283,12 +283,3 @@ const AUTOPLAY_DELAY = 3800;
     if (t) openFly();
   });
 })();
-
-// 保證圖片載入完成後再對位
-const imgs = Array.from(layer.querySelectorAll('img'));
-Promise.all(imgs.map(img => img.complete ? Promise.resolve() :
-  new Promise(r => img.addEventListener('load', r, { once: true }))
-)).then(() => go(index));
-
-// 斷點切換時重算位移
-window.addEventListener('resize', () => requestAnimationFrame(() => go(index)));
