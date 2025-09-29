@@ -649,7 +649,7 @@ window.addEventListener('load', () => {
     section4: ['./img/4-1.jpg','./img/4-2.jpg','./img/4-3.jpg','./img/4-4.jpg'],
     section5: ['./img/5-1.jpg','./img/5-2.jpg','./img/5-3.jpg'],
     section6: ['./img/6-1.jpg','./img/6-2.jpg','./img/6-3.jpg'],
-    section7: ['./img/7-1.jpg','./img/7-2.jpg','./img/7-3.Jpg'],
+    section7: ['./img/7-1.jpg','./img/7-2.jpg','./img/7-3.jpg'],
   };
 
   
