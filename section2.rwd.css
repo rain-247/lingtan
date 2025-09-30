@@ -671,3 +671,110 @@
 /* 一張佔滿一屏（這條你檔案已經有，但補一條保險） */
 #section2 .s2-slide{ flex: 0 0 100%; }
 
+/* =========================
+   ≤300px｜Section 2 微型螢幕優化
+   ========================= */
+@media (max-width: 300px) {
+
+  /* 幻燈片圖片比例：改成 4:3，高度限制 */
+  #section2 .slide-viewport {
+    aspect-ratio: 4 / 3 !important;
+    max-height: 280px !important;
+    width: 100% !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  #section2 .s2-slide {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  #section2 .s2-slide > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;   /* 填滿外框 */
+  }
+
+  /* 圖上文字框：縮小、拉寬 */
+  #section2 .s2-caption {
+    position: absolute !important;
+    left: 10px !important;
+    bottom: 10px !important;
+    max-width: 78% !important;      /* 避免太窄 */
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,.88) !important;
+    backdrop-filter: blur(4px);
+    line-height: 1.35 !important;
+    z-index: 2 !important;
+  }
+  #section2 .s2-caption .cap-title { font-size: 11px !important; margin: 0 0 2px !important; }
+  #section2 .s2-caption .cap-desc  { font-size: 9px !important; margin: 0 !important; }
+
+  /* 右下角按鈕避免與文字框打架 */
+  #section2 .slide-viewport > .map-btn {
+    right: 10px !important;
+    bottom: 10px !important;
+    transform: none !important;
+    z-index: 3 !important;
+  }
+
+  /* 彈窗本體：縮小，保持在螢幕內 */
+  #s2-flyover {
+    display: grid !important;
+    place-items: center !important;
+    padding: 8px !important;
+  }
+  #s2-flyover .s2-map-panel {
+    width: 80% !important;         /* 縮小一點 */
+    max-height: 72vh !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    display: grid !important;
+    grid-template-rows: auto 1fr !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 彈窗內圖片 */
+  #s2-flyover .s2-map-img {
+    width: 100% !important;
+    object-fit: contain !important; /* 照片完整顯示 */
+    background: #fff !important;
+    display: block !important;
+  }
+
+  /* 彈窗內文字區塊：縮小字體或拉寬 */
+  #s2-flyover .s2-map-caption {
+    max-width: 95% !important;     /* 文字區塊拉寬 */
+    max-height: 34vh !important;
+    overflow: auto !important;
+    padding: 8px 10px !important;
+    background: rgba(255,255,255,.96) !important;
+  }
+  #s2-flyover .s2-map-caption .cap-title {
+    font-size: 13px !important;
+    margin: 0 0 4px !important;
+  }
+  #s2-flyover .s2-map-caption .cap-desc {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* 關閉按鈕 */
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    width: 24px !important;
+    height: 24px !important;
+    z-index: 5 !important;
+  }
+
+  /* 保險：彈窗內元素不製造水平捲動 */
+  #s2-flyover * {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+}

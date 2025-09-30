@@ -772,9 +772,9 @@ nav, nav .container, nav .navbar-inner {
   }
   #s2-flyover .s2-map-panel {
     position: relative !important;
-    width: min(94vw, 340px) !important;      /* 面板不超寬 */
+    width: min(80vw, 340px) !important;      /* 面板不超寬 */
     max-width: calc(100vw - 12px) !important;
-    max-height: 94vh !important;
+    max-height: 74vh !important;
     margin: auto !important;
     display: grid !important;
     grid-template-rows: 1fr auto !important; /* 上：地圖，下：說明 */
@@ -950,3 +950,179 @@ nav {
 }
 
 
+/* 300px 以下：footer 三區塊不要硬撐 260px */
+@media (max-width: 300px) {
+  .site-footer,
+  .footer-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding-inline: 8px !important;
+    box-sizing: border-box !important;
+  }
+  .footer-logo,
+  .footer-contact,
+  .footer-social {
+    min-width: 0 !important;      /* ← 關鍵：打掉 260px 下限 */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+  /* QR 圖縮一點、間距收斂，避免擠爆第二欄 */
+  .social-qr-img { width: 72px !important; height: 72px !important; }
+  .social-qr-list { gap: 8px !important; flex-wrap: wrap !important; }
+}
+
+/* 保險：根元素不給橫向溢位 */
+:where(html, body){ overflow-x: hidden !important; max-width: 100% !important; }
+
+/* 300px 以下：footer 文字縮小 + Email 可換行 */
+@media (max-width: 300px) {
+  .footer-contact h4,
+  .footer-social h4 {
+    font-size: 14px !important;   /* 比原本 16px 小一級 */
+  }
+  .footer-contact p,
+  .footer-social p,
+  .footer-contact a,
+  .footer-social a {
+    font-size: 12px !important;   /* 比原本 14px 小一級 */
+    line-height: 1.5 !important;
+  }
+  /* 讓長字串 (email/網址/電話) 在極窄螢幕也能自動斷行 */
+  .footer-contact, .footer-social {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+  .footer-contact a, .footer-social a {
+    display: inline-block; /* 有時有助於換行 */
+    max-width: 100% !important;
+  }
+}
+
+/* 300px 以下：限制第 3–7 區段外框 + 圖片置中 */
+@media (max-width: 300px) {
+  #section3 .image-block,
+  #section4 .image-block,
+  #section5 .image-block,
+  #section6 .image-block,
+  #section7 .image-block {
+    max-height: 120px !important;   /* 外框高度限制 */
+    overflow: hidden !important;    /* 超出裁掉 */
+    border-radius: 10px !important;
+    display: flex !important;       /* 開啟 flex */
+    justify-content: center !important; /* 水平置中 */
+    align-items: center !important;     /* 垂直置中 */
+  }
+
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img {
+    height: 100% !important;
+    width: 100% !important;         /* 自動算寬度 */
+    object-fit: cover !important;   /* 保持比例並裁切 */
+  }
+}
+
+/* 300px 以下：第一區段圖片變大 + 文字貼齊左側 */
+@media (max-width: 300px) {
+#section1 {
+    width: 100% !important;
+  }
+
+  #section1 .container {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+  }
+  #section1 .hero-block {
+    display: flex !important;
+    align-items: center !important;   /* 垂直置中 */
+    gap: 8px !important;  
+    width: 80%;      
+    height: 200px !important;  /* 固定高度 */
+    margin: 0 auto !important;
+    padding: 0 !important;}
+
+  #section1 .hero-block img {
+    width: 100% !important;           /* 圖片放大，可以再調整 */
+    height: auto !important;
+    border-radius: 8px !important;
+  }
+
+  #section1 .first-title,
+  #section1 .second-title {  /* 不換行 */
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  #section1 .first-title {
+    font-size: 1rem !important;       /* 縮小一點避免超出 */
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+
+  #section1 .second-title {
+    font-size: 0.8rem !important;
+    line-height: 1.2 !important;
+    font-weight: 400 !important;
+  }
+}
+
+/* ≤300px：S2 彈窗真正水平置中，避免偏右 */
+@media (max-width: 300px) {
+  /* 覆蓋舊版定位：外層用 flex 置中 */
+  #s2-flyover {
+    position: fixed !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;             /* 邊緣安全距 */
+    box-sizing: border-box !important;
+  }
+
+  /* 面板：移除任何 left/right/top/transform 影響，寬高用 dvw/dvh */
+  #s2-flyover .s2-map-panel {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    inset: auto !important;
+    transform: none !important;
+
+    width: min(88dvw, 320px) !important;       /* 不吃到捲軸寬，避免右偏 */
+    max-width: calc(100dvw - 16px) !important; /* 再保險一層 */
+    max-height: 74dvh !important;
+
+    margin: 0 auto !important;
+    display: grid !important;
+    grid-template-rows: 1fr auto !important;   /* 上圖下文 */
+    gap: 8px !important;
+    box-sizing: border-box !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
+
+  /* 內容本身也不要撐出橫向捲軸 */
+  #s2-flyover .s2-map-panel * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 關閉鈕位置微調（跟著面板右上角） */
+  #s2-flyover .s2-modal__close {
+    position: absolute !important;
+    top: 6px !important;
+    right: 6px !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
