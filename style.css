@@ -1066,6 +1066,17 @@ nav.fixed .navbar-inner a.is-active::after {
 	display: grid;
 	place-items: center;
 }
+/* === Section8 modal slider arrows (match Sections 4–7 look) === */
+.shop-slide-nav .arrow{
+  width: 10px;
+  height: 10px;
+  border: solid #111;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+}
+.shop-slide-nav.prev .arrow{ transform: rotate(135deg); }
+.shop-slide-nav.next .arrow{ transform: rotate(-45deg); }
+
 .shop-slide-nav.prev {
 	left: 8px;
 }
@@ -2847,5 +2858,424 @@ nav {
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+
+
+/* === Force-show nav arrows for Sections 3–7 across ALL breakpoints (override) — 2025-10-23 === */
+#section3 .img-nav, #section4 .img-nav, #section5 .img-nav, #section6 .img-nav, #section7 .img-nav {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+#section3 .img-nav button, #section4 .img-nav button, #section5 .img-nav button, #section6 .img-nav button, #section7 .img-nav button {
+  pointer-events: auto !important;
+}
+/* Ensure image containment */
+#section3 .image-block, #section4 .image-block, #section5 .image-block, #section6 .image-block, #section7 .image-block {
+  overflow: hidden !important;
+}
+#section3 .image-block img, #section4 .image-block img, #section5 .image-block img, #section6 .image-block img, #section7 .image-block img {
+  object-fit: cover !important;
+}
+
+
+/* === Responsive fixed heights (follow desktop 16:9) — 2025-10-23 ===
+   對象：第 3～7 區圖片容器（.image-block / .frame-tilt）與內圖；可視需求加到其他區段。
+   規則：各寬度固定高度，維持 16:9 視覺；內圖以 cover 填滿，絕不爆邊。
+*/
+
+:root {
+  /* 你可以在這裡快速統一調整基準高度等級 */
+  --h-xxs: 220px;  /* ≤360 */
+  --h-xs : 260px;  /* 361–480 */
+  --h-sm : 300px;  /* 481–640 */
+  --h-md : 360px;  /* 641–768 */
+  --h-lg : 420px;  /* 769–1023 */
+  --h-xl : 480px;  /* 1024–1439 */
+  --h-2xl: 540px;  /* ≥1440 */
+}
+
+/* 共用：鎖框 + 16:9 外觀 */
+#section3 .image-block, #section3 .frame-tilt,
+#section4 .image-block, #section4 .frame-tilt,
+#section5 .image-block, #section5 .frame-tilt,
+#section6 .image-block, #section6 .frame-tilt,
+#section7 .image-block, #section7 .frame-tilt {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9 !important;
+}
+
+/* 內圖：滿版裁切、不變形 */
+#section3 .image-block img, #section3 .frame-tilt img,
+#section4 .image-block img, #section4 .frame-tilt img,
+#section5 .image-block img, #section5 .frame-tilt img,
+#section6 .image-block img, #section6 .frame-tilt img,
+#section7 .image-block img, #section7 .frame-tilt img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+}
+
+/* ≤360px */
+@media (max-width: 360px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-xxs) !important; max-height: var(--h-xxs) !important; }
+}
+
+/* 361–480 */
+@media (min-width: 361px) and (max-width: 480px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-xs) !important; max-height: var(--h-xs) !important; }
+}
+
+/* 481–640 */
+@media (min-width: 481px) and (max-width: 640px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-sm) !important; max-height: var(--h-sm) !important; }
+}
+
+/* 641–768 */
+@media (min-width: 641px) and (max-width: 768px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-md) !important; max-height: var(--h-md) !important; }
+}
+
+/* 769–1023 */
+@media (min-width: 769px) and (max-width: 1023px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-lg) !important; max-height: var(--h-lg) !important; }
+}
+
+/* 1024–1439 */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-xl) !important; max-height: var(--h-xl) !important; }
+}
+
+/* ≥1440 */
+@media (min-width: 1440px) {
+  #section3 .image-block, #section3 .frame-tilt,
+  #section4 .image-block, #section4 .frame-tilt,
+  #section5 .image-block, #section5 .frame-tilt,
+  #section6 .image-block, #section6 .frame-tilt,
+  #section7 .image-block, #section7 .frame-tilt { height: var(--h-2xl) !important; max-height: var(--h-2xl) !important; }
+}
+
+
+
+
+/* 第 3 區段：隱藏箭頭（僅一張圖不需導覽） */
+#section3 .img-nav {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+
+/* === 2025-10-23 Update: Left-align Section1 title and subtitle === */
+#section1 .title-block {
+  text-align: left !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+}
+#section1 .first-title,
+#section1 .second-title {
+  text-align: left !important;
+  margin-left: 0 !important;
+}
+
+/* === Section7 專用：圖片在容器的幾何正中央顯示（不再貼左上）=== */
+
+/* 1) 讓容器負責置中 */
+#section7 .frame-tilt .slide-viewport,
+#section7 .image-block {
+  display: grid !important;
+  place-items: center !important;       /* 正中對齊 */
+  overflow: hidden !important;          /* 保持乾淨邊緣 */
+}
+
+/* 2) 取消前面對第3~7區的絕對定位與填滿規則（只針對第7區） */
+#section7 .frame-tilt .slide-layer,
+#section7 .frame-tilt .slide-layer img,
+#section7 .image-block img {
+  position: static !important;          /* 解除 absolute */
+  inset: auto !important;
+  transform: none !important;
+}
+
+/* 3) 圖片置中顯示；你要「中央」，維持 cover 不變形、以中心裁切 */
+#section7 .frame-tilt .slide-layer img,
+#section7 .image-block img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;         /* 充滿容器（如要看到全圖改成 contain） */
+  object-position: center center !important; /* 以“中央”為裁切基準 */
+  display: block !important;
+}
+
+/* === Section7 微調：圖片略縮小、垂直置中顯示 === */
+#section7 .frame-tilt,
+#section7 .image-block {
+  display: flex !important;
+  align-items: center !important;      /* 垂直置中 */
+  justify-content: center !important;  /* 水平置中 */
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* 圖片略縮小、仍保持中央 */
+#section7 .frame-tilt img,
+#section7 .image-block img {
+  position: relative !important;       /* 比原來小一點，讓上下邊留白 */
+  height: auto !important;  /* 等比縮小顯示更多畫面 */
+  transform: none !important;
+  display: block !important;
+}
+
+
+
+/* === [Override] Sections 4–7 image full-bleed: remove inner gaps, fill column === */
+#section4 .image-block,
+#section5 .image-block,
+#section6 .image-block,
+#section7 .image-block,
+#section4 .frame-tilt,
+#section5 .frame-tilt,
+#section6 .frame-tilt,
+#section7 .frame-tilt {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  overflow: hidden !important;            /* ensure no letterboxing */
+}
+
+#section4 .image-block img,
+#section5 .image-block img,
+#section6 .image-block img,
+#section7 .image-block img,
+#section4 .frame-tilt img,
+#section5 .frame-tilt img,
+#section6 .frame-tilt img,
+#section7 .frame-tilt img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;           /* cover the whole box */
+  object-position: center center !important;
+}
+
+/* Kill any inner wrappers creating whitespace */
+#section4 .image-block > *,
+#section5 .image-block > *,
+#section6 .image-block > *,
+#section7 .image-block > *,
+#section4 .frame-tilt > *,
+#section5 .frame-tilt > *,
+#section6 .frame-tilt > *,
+#section7 .frame-tilt > * {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* When galleries exist in 4–7, ensure slides fill container with no gaps */
+#section4 .img-gallery .img-track,
+#section5 .img-gallery .img-track,
+#section6 .img-gallery .img-track,
+#section7 .img-gallery .img-track {
+  gap: 0 !important;
+}
+#section4 .img-gallery .img-slide,
+#section5 .img-gallery .img-slide,
+#section6 .img-gallery .img-slide,
+#section7 .img-gallery .img-slide {
+  min-width: 100% !important;
+}
+
+
+
+/* 保留原有樣式，只在 400–640px 修正可見性與可點擊性（不改顏色/尺寸/背景） */
+@media (min-width: 400px) and (max-width: 640px) {
+  /* 讓容器不會把按鈕裁掉，並確保在上層可見 */
+  #section7 .text-image-wrap,
+  #section7 .image-block {
+    overflow: visible !important;
+    z-index: 1 !important;
+  }
+
+  /* 只修正可見性與互動，不改外觀（不設定背景、大小、形狀等） */
+  #section7 .img-nav,
+  #section7 .img-nav button,
+  #section7 .img-nav .prev,
+  #section7 .img-nav .next {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 999 !important;
+  }
+}
+
+#section8 #shopModal .shop-slider { position: relative; }
+
+#section8 #shopModal .shop-slider .img-nav {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  left: clamp(0.75rem, 2.5vw, 1.2rem) !important; /* 響應式距離 */
+  right: auto !important;
+  width: clamp(36px, 4.2vw, 44px) !important;    /* 保持圓形按鈕，但用 clamp */
+  height: clamp(36px, 4.2vw, 44px) !important;
+  border-radius: 999px !important;
+  background: rgba(0,0,0,0.45) !important;
+  border: none !important;             /* 確保按鈕本身沒有邊線干擾 */
+  display: grid !important;
+  place-items: center !important;
+  z-index: 1200 !important;
+  pointer-events: auto !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18) !important;
+}
+
+/* 右側用相同響應式距離 */
+#section8 #shopModal .shop-slider .img-nav.next {
+  left: auto !important;
+  right: clamp(0.75rem, 2.5vw, 1.2rem) !important;
+}
+
+/* 乾淨的箭頭（使用 border 的單一 L 線組合，避免多餘線條） */
+#section8 #shopModal .shop-slider .img-nav .arrow {
+  display: block !important;
+  width: 0.55em !important;
+  height: 0.55em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;       /* 移除可能的陰影干擾 */
+  border: none !important;           /* 先清空所有邊框 */
+  /* 用右下兩條 border 畫出單一箭頭（不會和按鈕邊框重複） */
+  border-right: 2px solid #fff !important;
+  border-bottom: 2px solid #fff !important;
+  transform-origin: center center !important;
+  /* 預設朝右下（下一張）方向，透過下面調整 prev/next */
+  transform: rotate(-45deg) !important;
+}
+
+/* Prev 旋轉到左上（與全站 4~7 區一致的方向） */
+#section8 #shopModal .shop-slider .img-nav.prev .arrow {
+  transform: rotate(135deg) !important;
+}
+/* Next 保持右下 */
+#section8 #shopModal .shop-slider .img-nav.next .arrow {
+  transform: rotate(-45deg) !important;
+}
+
+/* 小螢幕微調（距離更小） */
+@media (max-width: 640px) {
+  #section8 #shopModal .shop-slider .img-nav {
+    left: clamp(6px, 3vw, 10px) !important;
+    width: clamp(28px, 6.5vw, 34px) !important;
+    height: clamp(28px, 6.5vw, 34px) !important;
+  }
+  #section8 #shopModal .shop-slider .img-nav.next {
+    right: clamp(6px, 3vw, 10px) !important;
+    left: auto !important;
+  }
+  #section8 #shopModal .shop-slider .img-nav .arrow {
+    border-right-width: 2px !important;
+    border-bottom-width: 2px !important;
+  }
+}
+
+#section2 {
+	height: auto !important;
+	
+}
+
+.s2-carousel-container {
+	margin-top: 10%;
+}
+
+.s2-map-container {
+	margin-top: 5%;
+	width: 100%;
+	border-radius: 500px;
+}
+
+.s2-map-container img {
+	width: 100%;
+}
+
+.text {
+	margin-top: 2%;
+}
+
+#section2 .s2-map-container .s2-map-img {
+  border-radius: 18px !important;                     /* 圓邊 */
+  overflow: hidden !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;      /* 細框線增加層次 */
+  box-shadow: 0 14px 36px rgba(15,23,42,0.08) !important; /* 柔和陰影 */
+  transition: transform .20s ease, box-shadow .20s ease;
+  background: #fff !important;                        /* 若圖有透明，補白底 */
+}
+
+/* 懸停微互動（選配，可保留）*/
+#section2 .s2-map-container .s2-map-img:hover {
+  transform: translateY(-6px) scale(1.002);
+  box-shadow: 0 22px 48px rgba(15,23,42,0.12) !important;
+}
+
+/* 圖片下方標題/描述美化與字級 */
+#section2 .s2-map-container .cap-title {
+  font-size: clamp(16px, 1.25vw, 18px) !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 12px 0 6px !important;
+  letter-spacing: 0.2px;
+}
+
+#section2 .s2-map-container .cap-desc {
+  font-size: clamp(13px, 1.05vw, 15px) !important;
+  color: #475569 !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+  opacity: 0.95 !important;
+}
+
+/* 小螢幕微調：圓角稍微縮、字稍小 */
+@media (max-width: 640px) {
+  #section2 .s2-map-container .s2-map-img {
+    border-radius: 12px !important;
+    box-shadow: 0 10px 26px rgba(15,23,42,0.07) !important;
+  }
+  #section2 .s2-map-container .cap-title {
+    font-size: 15px !important;
+    margin-top: 10px !important;
+  }
+  #section2 .s2-map-container .cap-desc {
+    font-size: 13px !important;
+  }
 }
 

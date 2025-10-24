@@ -1027,6 +1027,7 @@ nextBtn?.addEventListener('click', () => goto(+1));
 
 
 
+// ...existing code...
 const modal = document.getElementById('shopModal');
 const mClose = document.getElementById('shopModalClose');
 const mTitle = document.getElementById('shopModalTitle');
@@ -1034,31 +1035,22 @@ const mHours = document.getElementById('shopModalHours');
 const mSub   = document.getElementById('shopModalSubtitle');
 const mDesc  = document.getElementById('shopModalDesc');
 
-
-
 if (modal && modal.parentElement !== document.body) {
   document.body.appendChild(modal);
 }
 
-
-
-// ---- Compatibility aliases to avoid ReferenceError ----
-try {
-  window.SlidePrev = window.SlidePrev || document.getElementById('shopSlidePrev') || document.getElementById('shopslidePrev') || null;
-  window.SlideNext = window.SlideNext || document.getElementById('shopSlideNext') || document.getElementById('shopslideNext') || null;
-  if (window.SlidePrev && !window.SlidePrev) window.SlidePrev = window.SlidePrev;
-  if (window.SlideNext && !window.SlideNext) window.SlideNext = window.SlideNext;
-} catch (e) {}
-// ------------------------------------------------------
-const slideTrack = document.getElementById('shopSlideTrack');
-const slidePrev  = document.getElementById('shopSlidePrev') || document.getElementById('shopslidePrev');
-const slideNext  = document.getElementById('shopSlideNext');
-const slideDots  = document.getElementById('shopSlideDots');
-let slideImages = []; let slideIndex = 0;
-
+let slideImages = [];
+let slideIndex = 0;
 let slideTimer = null;
-function stopAutoplay(){ if (slideTimer) { clearInterval(slideTimer); slideTimer = null; } }
-function startAutoplay(interval=3000){
+
+function stopAutoplay(){ 
+  if (slideTimer) { 
+    clearInterval(slideTimer); 
+    slideTimer = null; 
+  } 
+}
+
+function startAutoplay(interval = 3000){
   stopAutoplay();
   if (!Array.isArray(slideImages) || slideImages.length <= 1) return;
   slideTimer = setInterval(()=>{
@@ -1067,54 +1059,111 @@ function startAutoplay(interval=3000){
   }, interval);
 }
 
-function buildSlides(urls, altBase){
-  slideTrack.innerHTML = urls.map(u => `<div class="shop-slide"><img src="${u}" alt="${altBase||''} 照片"></div>`).join('');
-  slideDots.innerHTML = urls.map((_,i)=>`<div class="shop-slide-dot${i===0?' is-active':''}" data-idx="${i}"></div>`).join('');
+// 建立 slider DOM（插入到 modal 內 .shop-slider）
+function buildSlides(urls = [], altBase){
+  const sliderContainer = modal.querySelector('.shop-slider');
+  if (!sliderContainer) return;
+  const list = Array.isArray(urls) ? urls : [];
+  const trackHtml = list.map(u => `<div class="shop-slide"><img src="${u}" alt="${altBase||''} 照片"></div>`).join('');
+  const arrowsHtml = list.length > 1 ? `
+    <button type="button" class="img-nav prev" aria-label="上一張"><span class="arrow"></span></button>
+    <button type="button" class="img-nav next" aria-label="下一張"><span class="arrow"></span></button>
+  ` : '';
+  const dotsHtml = `<div class="shop-slide-dots">${list.map((_,i)=>`<span class="${i===0?'active':''}" data-idx="${i}"></span>`).join('')}</div>`;
+
+  sliderContainer.innerHTML = `<div class="shop-slide-track">${trackHtml}</div>${arrowsHtml}${dotsHtml}`;
+
+  // 取得新建立的元素
+  const trackEl = sliderContainer.querySelector('.shop-slide-track');
+  const prevBtn = sliderContainer.querySelector('.img-nav.prev');
+  const nextBtn = sliderContainer.querySelector('.img-nav.next');
+  const dots = sliderContainer.querySelectorAll('.shop-slide-dots span');
+
+  // 確保 layout
+  if (trackEl) {
+    trackEl.style.display = 'flex';
+    trackEl.style.width = '100%';
+    trackEl.style.transition = 'transform .35s ease';
+  }
+
+  // reset index & position
   slideIndex = 0;
   updateSlidePosition();
-  startAutoplay(3000);
-}
-function updateSlidePosition(){
-  const viewport = slideTrack && slideTrack.parentElement ? slideTrack.parentElement : null;
-  const vw = viewport ? viewport.clientWidth : 0;
-  const offset = Math.max(0, slideIndex) * vw;
-  // 用像素位移，避免百分比以 track 寬度為基準導致「一次搬走整條」
-  slideTrack.style.transform = `translateX(-${offset}px)`;
-  // 更新頁點狀態
-  if (typeof slideDots !== 'undefined' && slideDots && slideDots.children) {
-    [...slideDots.children].forEach((d,i)=>d.classList.toggle('is-active', i===slideIndex));
+
+  // 綁定按鈕與圓點（每次建立都綁新的）
+  if (list.length > 1) {
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stopAutoplay();
+      slideIndex = (slideIndex - 1 + list.length) % list.length;
+      updateSlidePosition();
+      startAutoplay(3000);
+    });
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stopAutoplay();
+      slideIndex = (slideIndex + 1) % list.length;
+      updateSlidePosition();
+      startAutoplay(3000);
+    });
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopAutoplay();
+        slideIndex = i;
+        updateSlidePosition();
+        startAutoplay(3000);
+      });
+    });
+
+    // 側滑暫停（滑鼠移入暫停、自動播放）
+    sliderContainer.addEventListener('mouseenter', () => stopAutoplay());
+    sliderContainer.addEventListener('mouseleave', () => startAutoplay(3000));
   }
-  const disabled = (!Array.isArray(slideImages) || slideImages.length<=1);
-  if (slidePrev) slidePrev.disabled = disabled;
-  if (slideNext) slideNext.disabled = disabled;
 }
 
-// 視窗尺寸變化時，重新計算位移，避免重繪後定位錯亂
-window.addEventListener('resize', () => {
-  if (!slideTrack) return;
-  requestAnimationFrame(updateSlidePosition);
-});
+function updateSlidePosition(){
+  const track = modal.querySelector('.shop-slide-track');
+  const dots = modal.querySelectorAll('.shop-slide-dots span');
+  if (!track) return;
+
+  // 每張 slide 寬度為容器 100%（flex），使用百分比位移
+  track.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+  // 更新 dots
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === slideIndex));
+
+  // 顯示/隱藏箭頭（避免蓋到關閉按鈕）
+  const prevBtn = modal.querySelector('.img-nav.prev');
+  const nextBtn = modal.querySelector('.img-nav.next');
+  const disabled = (!Array.isArray(slideImages) || slideImages.length <= 1);
+  if (prevBtn) prevBtn.style.display = disabled ? 'none' : '';
+  if (nextBtn) nextBtn.style.display = disabled ? 'none' : '';
+}
+
+// window resize 保持位置正確
+window.addEventListener('resize', () => requestAnimationFrame(updateSlidePosition));
+
+// open modal 並初始化 slides
+function openModalFor(item){
+  if (!item) return;
+  mTitle.textContent = item.name || '—';
+  mHours.textContent = item.hours || '';
+  mSub.textContent = item.subtitle || '';
+  mDesc.textContent = item.desc || '';
+
+  slideImages = Array.isArray(item.photos) && item.photos.length ? item.photos.slice() : (item.img ? [item.img] : []);
+  buildSlides(slideImages, item.name);
   startAutoplay(3000);
 
-
-function openModalFor(item, anchorEl){
-  mTitle.textContent = (item && item.name) || "—";
-  mHours.textContent = (item && item.hours) || "";
-  mSub.textContent   = (item && item.subtitle) || "";
-  mDesc.textContent  = (item && item.desc) || "";
-
-  
-  slideImages = (item && item.photos && item.photos.length) ? item.photos : ((item && item.img) ? [item.img] : []);
-  buildSlides(slideImages, item ? item.name : undefined);
-  const modal = document.getElementById('shopModal');
   const section8 = document.getElementById('section8');
   const grid = document.getElementById('shopGrid');
   if (!modal || !section8 || !grid) return;
-
   if (!section8.contains(modal)) section8.appendChild(modal);
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
 
+  // 計算並設定彈窗位置（保留原邏輯）
   Object.assign(modal.style, {
     position: 'absolute',
     transform: 'translate(-50%, -50%)',
@@ -1122,26 +1171,24 @@ function openModalFor(item, anchorEl){
     maxHeight: '92vh',
     overflow: 'auto'
   });
-
-  const secRect  = section8.getBoundingClientRect();
+  const secRect = section8.getBoundingClientRect();
   const gridRect = grid.getBoundingClientRect();
-  let cx = gridRect.left + gridRect.width  / 2 - secRect.left;
-  let cy = gridRect.top  + gridRect.height / 2 - secRect.top;
+  let cx = gridRect.left + gridRect.width/2 - secRect.left;
+  let cy = gridRect.top + gridRect.height/2 - secRect.top;
 
   const PADDING = 12;
-  const modalW = modal.offsetWidth  || 0;
+  const modalW = modal.offsetWidth || 0;
   const modalH = modal.offsetHeight || 0;
-  const minX = PADDING + modalW / 2;
-  const maxX = Math.max(minX, section8.clientWidth  - PADDING - modalW / 2);
-  const minY = PADDING + modalH / 2;
-  const maxY = Math.max(minY, section8.clientHeight - PADDING - modalH / 2);
+  const minX = PADDING + modalW/2;
+  const maxX = Math.max(minX, section8.clientWidth - PADDING - modalW/2);
+  const minY = PADDING + modalH/2;
+  const maxY = Math.max(minY, section8.clientHeight - PADDING - modalH/2);
   cx = Math.min(Math.max(cx, minX), maxX);
   cy = Math.min(Math.max(cy, minY), maxY);
 
   modal.style.left = Math.round(cx) + 'px';
   modal.style.top  = Math.round(cy) + 'px';
 }
-
 
 function closeModal(){
   modal.classList.remove('is-open');
@@ -1152,6 +1199,18 @@ function closeModal(){
   stopAutoplay();
 }
 
+// 綁定關閉
+mClose?.addEventListener('click', closeModal);
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+// 允許外部呼叫 openModalFor（保持與既有呼叫相容）
+window.openModalFor = window.openModalFor || openModalFor;
+
+// refresh helper（若外部呼叫）
+function refreshShopSlides(){
+  try{ requestAnimationFrame(updateSlidePosition); }catch(e){}
+}
+// ...existing code...
   
   
   
@@ -1521,3 +1580,87 @@ slideDots.addEventListener('click', (e) => {
     if (e.key === 'Escape') close();
   });
 })();
+
+
+/* === 2025-10-23 Auto-fit images — center content, show full image when possible ===
+   規則：
+   - 以容器與圖片的長寬比比對，差距在 6% 以內 → object-fit: contain（顯示全圖）；
+     否則 → object-fit: cover（置中裁切，重心在中央）。
+   - 監聽載入、視窗尺寸變化、方向改變與 DOM 變更。
+   - 可用 data-fit="cover|contain" 在單張圖上強制指定，跳過自動判斷。
+*/
+(function(){
+  const SELECTOR = [
+    '#section1 .slider-container img',
+    '#section2 .s2-slide > img',
+    '#section3 .image-block img', '#section3 .frame-tilt img',
+    '#section4 .image-block img', '#section4 .frame-tilt img',
+    '#section5 .image-block img', '#section5 .frame-tilt img',
+    '#section6 .image-block img', '#section6 .frame-tilt img',
+    '#section7 .image-block img', '#section7 .frame-tilt img',
+    '#section8 .shop-card img',   '#section8 .item-card img'
+  ].join(', ');
+
+  const THRESHOLD = 0.06; // 6% 以內視為「比例相近」
+
+  function pickContainer(img){
+    return img.closest('.s2-slide, .image-block, .frame-tilt, .slider-container, .shop-card, .item-card') || img.parentElement;
+  }
+
+  function computeFit(img, container){
+    if (!img || !container) return;
+
+    // 手動強制：data-fit="cover|contain"
+    const force = img.getAttribute('data-fit');
+    if (force === 'cover' || force === 'contain') {
+      img.style.objectFit = force;
+      img.style.objectPosition = 'center center';
+      return;
+    }
+
+    const cw = container.clientWidth || container.getBoundingClientRect().width;
+    const ch = container.clientHeight || container.getBoundingClientRect().height;
+    const iw = img.naturalWidth  || img.width;
+    const ih = img.naturalHeight || img.height;
+    if (!cw || !ch || !iw || !ih) return;
+
+    const cr = cw / ch;
+    const ir = iw / ih;
+    const close = Math.abs(cr - ir) / cr < THRESHOLD;
+
+    img.style.objectPosition = 'center center';
+    img.style.objectFit = close ? 'contain' : 'cover';
+  }
+
+  function retarget(root){
+    const scope = root || document;
+    const imgs = scope.querySelectorAll(SELECTOR);
+    imgs.forEach(img => {
+      const container = pickContainer(img);
+      if (!container) return;
+      if (img.complete && img.naturalWidth) {
+        computeFit(img, container);
+      } else {
+        img.addEventListener('load', () => computeFit(img, container), { once: true });
+      }
+    });
+  }
+
+  function refreshAll(){ retarget(document); }
+
+  window.addEventListener('load', refreshAll);
+  window.addEventListener('resize', refreshAll);
+  window.addEventListener('orientationchange', refreshAll);
+
+  const mo = new MutationObserver(() => refreshAll());
+  mo.observe(document.documentElement, { subtree: true, childList: true });
+})();
+
+
+// === Section8 modal: safety refresh after dynamic images appended ===
+function refreshShopSlides(){
+  try{
+    if (!window.requestAnimationFrame) return updateSlidePosition && updateSlidePosition();
+    requestAnimationFrame(()=>{ updateSlidePosition && updateSlidePosition(); });
+  }catch(e){}
+}

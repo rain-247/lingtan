@@ -125,44 +125,36 @@
       <h2 class="first-title font-bold text-gray-900 text-3xl md:text-4xl">龍潭地景</h2>
     </div>
 
-    <div class="image-block">
+    <!-- 地圖區（獨立上方）-->
+    <div class="s2-map-container mb-6">
+        <img src="./img/s2_map.jpg" alt="龍潭地景地圖" class="s2-map-img rounded-lg block mx-auto" />
+        <div class="text">
+          <p class="cap-title block font-semibold">龍潭地景導覽</p>
+          <p class="cap-desc mt-1">沿著菱潭街一路走，老屋、巷弄與大池的水紋交錯；把時間放慢，故事就會自己浮上來。</p>
+          </div>
+    </div>
+
+    <!-- 輪播區（獨立下方）-->
+    <div class="s2-carousel-container">
       <figure class="frame-tilt">
         <div class="slide-viewport rounded-xl relative">
-  <div class="slide-layer" data-gallery="section2"></div><!-- === Section2 地圖：就地覆蓋 flyover === -->
-<!-- ★【第二區段｜地圖彈窗內容】改地圖圖檔、標題與敘述：見下方 .s2-map-img / .cap-title / .cap-desc -->
-<div id="s2-flyover" class="s2-flyover hidden" role="dialog" aria-modal="true" aria-labelledby="s2-map-title">
-  <div class="s2-map-panel" tabindex="-1">
-    <button class="s2-modal__close" aria-label="關閉">&times;</button>
-    <!-- 地圖主圖｜把 src 換成你的地圖圖片檔案路徑（例如 ./img/my_map.jpg） -->
-<img src="./img/s2_map.jpg" alt="龍潭地景地圖" class="s2-map-img">
-    <div class="s2-map-caption">
-      <!-- 彈窗標題文字｜直接改內文 -->
-<strong class="cap-title">龍潭地景導覽</strong>
-      <!-- 彈窗描述文字｜直接改內文段落 -->
-<p class="cap-desc">沿著菱潭街一路走，老屋、巷弄與大池的水紋交錯；把時間放慢，故事就會自己浮上來。</p>
-    </div>
-  </div>
-</div>
-<!-- === /Section2 地圖：就地覆蓋 flyover === -->
+          <!-- slide-layer 由 section2.js 建立 / 填入圖片 -->
+          <div class="slide-layer" data-gallery="section2" aria-live="polite"></div>
 
-  <div class="img-nav">
-    <button class="prev" aria-label="上一張"><span class="arrow"></span></button>
-    <button class="next" aria-label="下一張"><span class="arrow"></span></button>
-  </div>
+          <!-- 左右箭頭（保留語意與無障礙） -->
+          <div class="img-nav" aria-hidden="false">
+            <button class="prev" aria-label="上一張" type="button"><span class="arrow" aria-hidden="true"></span></button>
+            <button class="next" aria-label="下一張" type="button"><span class="arrow" aria-hidden="true"></span></button>
+          </div>
 
-  <!-- 新增按鈕 -->
-  
-</div>
-  <button class="map-btn">
-    查看龍潭地景地圖
-  </button>
-</div>
+          <!-- caption、dots 或 map-btn 若需要可放在此（目前 map 已內嵌，上方不需要打開彈窗） -->
+          <button class="map-btn sr-only" aria-hidden="true" style="display:none;">地圖（已內嵌）</button>
+        </div>
       </figure>
     </div>
+
   </div>
 </section>
-
-
 
 
 
