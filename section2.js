@@ -40,7 +40,7 @@ const IMGS = [
     { src: './img/map_south.jpg', title: '南天宮',   desc: '老屋新生，保留骨架，長出新故事。' },
     { src: './img/map_water.jpg', title: '龍潭大池',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' },
     { src: './img/map_wu.jpg', title: '武德殿',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' },
-    { src: './img/map_wu.jpg', title: '鐘肇政文學園區',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' }
+    { src: './img/map_zong.jpg', title: '鐘肇政文學園區',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' }
   ];
 
   // 生成每張卡片（圖 + 左下角說明框）

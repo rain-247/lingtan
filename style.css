@@ -755,23 +755,12 @@ body {
 	line-height: 1.4;
 }
 section {
-	margin-top: 40px !important;
-	margin-bottom: 40px !important;
-	padding-top: 40px !important;
-	padding-bottom: 40px !important;
+	margin-top: 85px !important;
+	margin-bottom: 85px !important;
+	padding-top: 85px !important;
+	padding-bottom: 85px !important;
 }
-section {
-	margin-top: 80px !important;
-	margin-bottom: 80px !important;
-	padding-top: 80px !important;
-	padding-bottom: 80px !important;
-}
-section {
-	margin-top: 50px !important;
-	margin-bottom: 50px !important;
-	padding-top: 50px !important;
-	padding-bottom: 50px !important;
-}
+
 section:first-of-type, .hero {
 	display: flex !important;
 	flex-direction: column;
@@ -1435,7 +1424,7 @@ body #section8 .store-card {
 body #section8 .store-figure {
 	border: none !important;
 	border-radius: 0 !important;
-	width: clamp(120px, 40%, 180px);
+	width: 50%;
 	height: auto;
 	display: flex;
 	align-items: center;
@@ -3277,5 +3266,103 @@ nav {
   #section2 .s2-map-container .cap-desc {
     font-size: 13px !important;
   }
+}
+
+
+/* === 第八區段｜商品欄位樣式強化 === */
+#section8 .store-product {
+  font-size: 13px;
+  color: #888;                  /* 比主文字淺一階 */
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  margin-top: 24px;              /* 與副標拉開距離 */
+  margin-bottom: 2px;
+  text-align: left;
+}
+
+/* 若在小螢幕上，字體再微調小一點 */
+@media (max-width: 640px) {
+  #section8 .store-product {
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+}
+
+/* 讓整個文字區塊有層次感 */
+#section8 .store-text .store-name {
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+#section8 .store-text .store-sub {
+  color: #444;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* === 移除所有圖片 hover 變黑效果 (section1~section7) === */
+#section1 img:hover,
+#section2 img:hover,
+#section3 img:hover,
+#section4 img:hover,
+#section5 img:hover,
+#section6 img:hover,
+#section7 img:hover {
+  filter: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* 移除黑色遮罩層與 hover 半透明效果 */
+#section1 .image-block::before,
+#section2 .image-block::before,
+#section3 .image-block::before,
+#section4 .image-block::before,
+#section5 .image-block::before,
+#section6 .image-block::before,
+#section7 .image-block::before {
+  content: none !important;
+  background: none !important;
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+/* 防止任何 hover 狀態加深顏色 */
+#section1 .image-block:hover::before,
+#section2 .image-block:hover::before,
+#section3 .image-block:hover::before,
+#section4 .image-block:hover::before,
+#section5 .image-block:hover::before,
+#section6 .image-block:hover::before,
+#section7 .image-block:hover::before {
+  opacity: 0 !important;
+}
+
+/* 若有 .hover-center（舊說明文字）也一併隱藏 */
+.hover-center {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+
+/* 移除舊的浮層（若仍存在） */
+#section1 .hero-hover-overlay,
+#section1 .overlay-inner,
+#section1 .overlay-text {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* 防止任何 :hover::before 或半透明層 */
+#section1 .slider-container::before,
+#section1 .slide::before {
+  content: none !important;
+  background: none !important;
+  opacity: 0 !important;
 }
 

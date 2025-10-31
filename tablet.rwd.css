@@ -1126,3 +1126,276 @@ nav {
     height: 24px !important;
   }
 }
+
+@media (min-width: 640px) and (max-width: 1000px) {
+  #section8 .store-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 20px;
+  }
+
+  #section8 .store-figure {
+    width: 150% important;  /* 讓圖更大 */
+    text-align: center;
+  }
+
+  #section8 .store-figure img {
+    width: 90%;             /* 原本 80% → 讓圖更大 */
+    max-height: 220px;      /* 原本 180 → 放大一點 */
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  /* 滑過時輕微放大，增加層次感 */
+  #section8 .store-figure img:hover {
+    transform: scale(1.05);
+  }
+
+  #section8 .store-text {
+    width: 100%;
+    text-align: center;
+  }
+
+  #section8 .store-text .store-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+
+  }
+
+  #section8 .store-text .store-sub {
+    font-size: 0.9rem;
+    color: #444;
+    margin-top: 2px;
+  }
+
+  #section8 .store-product {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 8px;
+  }
+}
+
+
+/* 1001px ~ 1200px → 保持橫式排版（圖左文右） */
+@media (min-width: 1001px) and (max-width: 1200px) {
+  #section8 .store-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 22px;
+  }
+
+  #section8 .store-figure {
+    flex: 0 0 40%;
+  }
+
+  #section8 .store-figure img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+  }
+
+  #section8 .store-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  #section8 .store-text .store-name {
+    font-size: 1.1rem;
+  }
+
+  #section8 .store-text .store-sub {
+    font-size: 0.95rem;
+    color: #444;
+  }
+
+  #section8 .store-product {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 8px;
+  }
+}
+
+/* =========================================================
+   全站字體統一覆寫（只加不改舊碼）
+   斷點：>1200 / 1001–1200 / 640–1000 / <640
+   ========================================================= */
+
+/* 共同：字重與行距基準（可微調） */
+/* =========================================================
+   全站字級調整版：整體放大一階，維持比例一致
+   ========================================================= */
+
+/* =========================================================
+   全站字級大幅放大版（約 +25% ~ +35%）
+   ========================================================= */
+
+/* ★ Desktop(>1200) */
+@media (min-width: 1201px){
+  :root{
+    --fs-h1: 46px;   /* 原38 */
+    --fs-h2: 36px;   /* 原30 */
+    --fs-h3: 26px;   /* 原22 */
+    --fs-text: 20px; /* 原17 */
+    --fs-small: 16px;/* 原14 */
+  }
+}
+
+/* ★ Laptop(1001–1200) */
+@media (min-width:1001px) and (max-width:1200px){
+  :root{
+    --fs-h1: 42px;
+    --fs-h2: 32px;
+    --fs-h3: 24px;
+    --fs-text: 18px;
+    --fs-small: 15px;
+  }
+}
+
+/* ★ Tablet(640–1000) */
+@media (min-width:640px) and (max-width:1000px){
+  :root{
+    --fs-h1: 36px;
+    --fs-h2: 28px;
+    --fs-h3: 22px;
+    --fs-text: 17px;
+    --fs-small: 14.5px;
+  }
+}
+
+/* ★ Mobile(<640) */
+@media (max-width:639px){
+  :root{
+    --fs-h1: 32px;
+    --fs-h2: 25px;
+    --fs-h3: 20px;
+    --fs-text: 16.5px;
+    --fs-small: 14px;
+  }
+}
+
+
+/* =========================================================
+   套用到各區段常用元素（維持你現有階層）
+   ========================================================= */
+
+/* 區塊大標題（首頁/章節標題） */
+/* .first-title,
+.fancy-title,
+.title-block h2,
+.section-title,
+#section8 .shop-gallery-title{
+  font-size: var(--fs-h1);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-title);
+}
+
+.subtitle,
+.sub-title,
+.title-block .subtitle,
+.section-subtitle{
+  font-size: var(--fs-h2);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-sub);
+}
+
+p, .paragraph, .body-text, .desc, .copy{
+  font-size: var(--fs-text);
+  line-height: var(--lh-text);
+  font-weight: var(--fw-body);
+}
+
+.small, .caption, .note, .hint, .meta{
+  font-size: var(--fs-small);
+  line-height: 1.5;
+} */
+
+/* =========================================================
+   第 8 區段：店家卡片字級統一
+   ========================================================= */
+
+/* 卡片標題 */
+#section8 .store-name{
+  font-size: var(--fs-h3);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-title);
+  color:#111;
+}
+
+/* 卡片副標（介紹） */
+#section8 .store-sub{
+  font-size: var(--fs-text);
+  line-height: var(--lh-text);
+  color:#444;
+  margin-top: 4px;
+}
+
+/* 新增的「販售商品」 */
+#section8 .store-product{
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color:#777;
+  margin-top: 8px;
+}
+
+/* 分頁指示/次要資訊 */
+#section8 .page-indicator,
+#section8 .marker-label{
+  font-size: var(--fs-small);
+}
+
+/* 彈窗（info-box）標題與說明對齊全站規格 */
+#section8 .info-box #info-title{
+  font-size: var(--fs-h2);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-title);
+}
+#section8 .info-box #info-subtitle{
+  font-size: var(--fs-text);
+  line-height: var(--lh-text);
+  font-weight: var(--fw-sub);
+}
+#section8 .info-box #info-product{
+  font-size: var(--fs-small);
+  color:#777;
+  line-height:1.55;
+  margin-top:6px;
+}
+#section8 .info-box #info-desc{
+  font-size: var(--fs-text);
+  line-height: var(--lh-text);
+}
+
+/* =========================================================
+   其他區段快速對齊（只調字，不動版面）
+   ========================================================= */
+
+#section2 .text-block p,
+#section2 .legend,
+#section2 .map-tip{ font-size: var(--fs-small); line-height: 1.5; }
+#section2 .text-block h3{ font-size: var(--fs-h3); line-height: var(--lh-title); }
+
+#section3 .text-block h3,
+#section4 .text-block h3,
+#section5 .text-block h3,
+#section6 .text-block h3,
+#section7 .text-block h3{
+  font-size: var(--fs-h2);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-sub);
+}
+#section3 .text-block p,
+#section4 .text-block p,
+#section5 .text-block p,
+#section6 .text-block p,
+#section7 .text-block p{
+  font-size: var(--fs-text);
+  line-height: var(--lh-text);
+}
+
+nav a, .btn, button{
+  font-size: var(--fs-small);
+  line-height: 1.3;
+}
+

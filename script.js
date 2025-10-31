@@ -145,6 +145,7 @@ const stores = [
   id: "xianrou",
   name: "Q發柴燒雞蛋糕",
   subtitle: `小小的攤位，烤出大大的溫度`,
+  product: "販售：香噴噴的雞蛋糕",
   coords: { x: 26, y: 64 },
   img: 'img/store (2).png', 
   photos: [                           
@@ -165,6 +166,7 @@ const stores = [
   id: "qfa",
   name: "GS飾品館",
   subtitle: "來找尋那一件專屬於您的飾品吧!",
+  product: "販售：各式手作飾品",
   coords: { x: 41, y: 52 },
   img: 'img/store (5).png', 
   photos: [                           
@@ -185,6 +187,7 @@ const stores = [
   id: "suixin",
   name: "小仙肉の家",
   subtitle: " 一起來，找到屬於自己的療癒時光",
+  product: "販售：水泥盆栽、手作裝飾品",
   coords: { x: 58, y: 47 },
   img: 'img/store (3).png', 
   photos: [                           
@@ -206,6 +209,7 @@ const stores = [
   id: "gs",
   name: "武威學堂",
   subtitle: "來這裡，找到屬於自己的小小快樂",
+  product: "販售：鋼琴課程與手作DIY",
   coords: { x: 35, y: 38 },
   img: 'img/store (11).png', 
   photos: [                           
@@ -225,6 +229,7 @@ const stores = [
   id: "catfive",
   name: "石麻谷",
   subtitle: "每件手作飾品，都是一份平安的祝福",
+  product: "販售：手作飾品",
   coords: { x: 68, y: 61 },
   img: 'img/store (4).png', 
   photos: [                           
@@ -246,6 +251,7 @@ const stores = [
   id: "love",
   name: "隨心所欲 ",
   subtitle: " 一針一線，縫出自在生活的溫度",
+  product: "販售：各式手織小物",
   coords: { x: 35, y: 38 },
   img: 'img/store (1).png', 
   photos: [                           
@@ -267,6 +273,7 @@ const stores = [
   id: "flover",
   name: "涵花綻放&涵花小集",
   subtitle: "以靜謐與創意，讓花之美在生活中綻放",
+  product: "販售：永生花以及相關文創商品",
   coords: { x: 35, y: 38 },
   img: 'img/store (9).png', 
   photos: [                           
@@ -284,6 +291,7 @@ const stores = [
 id: "candy",
 name: "糖糖鮮菓小站",
 subtitle: "裝載糖果的玻璃罐中，也盛放著童年的美好時光",
+product: "販售：各式糖果零食",
 coords: { x: 35, y: 38 },
 img: 'img/store (10).png', 
 photos: [                           
@@ -302,6 +310,7 @@ desc: `走進菱潭街，總會被一股甜香吸引，那就是「糖糖鮮菓�
 id: "lingtan",
 name: "龍潭文風造庄聯盟",
 subtitle: "走讀菱潭街，發現龍潭的美好",
+product: "販售：在地導覽",
 coords: { x: 35, y: 38 },
 img: 'img/store (6).png', 
 photos: [                           
@@ -316,6 +325,7 @@ desc: `深耕飾品 30+ 年，櫥窗與燈光陳列一眼就懂。主打耳環�
 id: "masaji",
 name: "療癒鬆筋精品鋪",
 subtitle: "從手感到生活，讓自己成為身體真正的夥伴",
+product: "販售：深層鬆筋護理服務與精品服飾",
 coords: { x: 35, y: 38 },
 img: 'img/store (13).png', 
 photos: [                           
@@ -335,6 +345,7 @@ desc: `34年來，老闆專注於「讓人從裡到外都放鬆」，親手為�
 id: "shot",
 name: "稜光映像",
 subtitle: "把美好的瞬間，化作永恆的記憶",
+product: "販售：專業攝影服務",
 coords: { x: 35, y: 38 },
 img: 'img/store (7).png', 
 photos: [                           
@@ -356,6 +367,7 @@ desc: `「喀擦」——快門聲響起的瞬間，光影被攝影師凝結成�
 id: "stone",
 name: "乘石匠物所",
 subtitle: "水晶所串起的，是一段專屬於你的療癒旅程",
+product: "販售：水晶飾品與脈輪療癒服務",
 coords: { x: 35, y: 38 },
 img: 'img/store (12).png', 
 photos: [                           
@@ -376,6 +388,7 @@ desc: `想放鬆，讓自己被療癒嗎？
 id: "noodle",
 name: "阿海麵店",
 subtitle: "一碗承載著記憶的麵的味道，讓人流連忘返",
+product: "販售：各式麵食",
 coords: { x: 35, y: 38 },
 img: 'img/store (15).png', 
 photos: [                           
@@ -396,6 +409,7 @@ desc: `熱湯翻滾的聲響，伴隨麵香瀰漫街頭，空氣裡的鹹香與�
 id: "cafe",
 name: "AIR KAFE",
 subtitle: "來品味溫暖，走進菱潭街的小秘境",
+product: "販售：咖啡",
 coords: { x: 35, y: 38 },
 img: 'img/store (8).png', 
 photos: [                           
@@ -414,6 +428,7 @@ desc: `走進菱潭街，你會被Air Kafe散發的濃郁咖啡香與溫暖氛�
 id: "god",
 name: "龍潭神捕",
 subtitle: "甚麼都能補!",
+product: "販售：修補各式物品",
 coords: { x: 35, y: 38 },
 img: 'img/store (14).png', 
 photos: [                           
@@ -642,60 +657,17 @@ window.addEventListener('load', () => {
 (function () {
   const sections = ['section3', 'section4', 'section5', 'section6', 'section7'];
 
-  
-    const IMAGE_SOURCES = {
-    
-    section3: ['./img/3_1.jpg'], 
+  // 仍保留圖片來源設定；可照原檔名路徑調整
+  const IMAGE_SOURCES = {
+    section3: ['./img/3_1.jpg'],
     section4: ['./img/4-1.jpg','./img/4-2.jpg','./img/4-3.jpg','./img/4-4.jpg'],
     section5: ['./img/5-1.jpg','./img/5-2.jpg','./img/5-3.jpg'],
     section6: ['./img/6-1.jpg','./img/6-2.jpg','./img/6-3.jpg'],
     section7: ['./img/7-1.jpg','./img/7-2.jpg','./img/7-3.jpg'],
   };
 
-  
-  
-  
-  const CAPTION_SOURCES = {
-    section3: ['早市的人潮節奏'],
-    section4: ['斑駁門面與落日','封板後的靜默','褪色招牌','空屋的回聲'],
-    section5: ['手作進駐的晨光','展演之後的笑聲','重生的騎樓步道'],
-    section6: ['日常散步的轉角','午後店貓打盹','慢讀咖啡的窗邊'],
-    section7: ['社區共學的藍圖','光節走廊的想像','下一站的生活劇場'],
-  };
-
-  
-  (function injectHoverCss(){
-    if (document.getElementById('hover-center-css')) return;
-    const css = `
-    #section3 .image-block, #section4 .image-block, #section5 .image-block,
-    #section6 .image-block, #section7 .image-block { position: relative; }
-    #section3 .image-block::before, #section4 .image-block::before,
-    #section5 .image-block::before, #section6 .image-block::before,
-    #section7 .image-block::before {
-      content:""; position:absolute; inset:0; background:rgba(0,0,0,.22);
-      opacity:0; transition:opacity .2s ease; border-radius:14px;
-    }
-    #section3 .image-block:hover::before, #section4 .image-block:hover::before,
-    #section5 .image-block:hover::before, #section6 .image-block:hover::before,
-    #section7 .image-block:hover::before { opacity:1; }
-    .image-block .hover-center{
-      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.98);
-      padding:.48em 1.05em; border-radius:999px; background:rgba(0,0,0,.58);
-      -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
-      color:#fff; font-weight:800; letter-spacing:.04em;
-      font-size:clamp(14px,1.7vw,22px); line-height:1.15; text-align:center;
-      max-width:min(82%,720px); white-space:normal; word-break:keep-all;
-      opacity:0; transition:opacity .2s ease, transform .2s ease; z-index:6;
-    }
-    #section3 .image-block:hover .hover-center, #section4 .image-block:hover .hover-center,
-    #section5 .image-block:hover .hover-center, #section6 .image-block:hover .hover-center,
-    #section7 .image-block:hover .hover-center { opacity:1; transform:translate(-50%,-50%) scale(1.02); }
-    `;
-    const style = document.createElement('style');
-    style.id = 'hover-center-css';
-    style.textContent = css;
-    document.head.appendChild(style);
-  })();
+  // ⛔ 已撤除：黑色遮罩與 hover 中央文字的 CSS 注入
+  // ⛔ 已撤除：CAPTION_SOURCES 與所有說明文字相關邏輯
 
   sections.forEach(id => {
     const root = document.getElementById(id);
@@ -704,42 +676,24 @@ window.addEventListener('load', () => {
     const imgBlock = root.querySelector('.image-block');
     if (!imgBlock) return;
 
-    
+    // 圖片來源
     const imgs = Array.from(imgBlock.querySelectorAll('img'));
     let sources = (IMAGE_SOURCES[id] && IMAGE_SOURCES[id].length)
       ? IMAGE_SOURCES[id].slice()
       : imgs.map(img => img.currentSrc || img.src).filter(Boolean);
     if (!sources.length) return;
 
-    
-    const capAttr = (imgBlock.getAttribute('data-captions') || '').trim();
-    let captions = capAttr
-      ? capAttr.split('|').map(s => s.trim()).filter(Boolean)
-      : (Array.isArray(CAPTION_SOURCES[id]) ? CAPTION_SOURCES[id].slice() : []);
-
-    function basename(p){ try{ return p.split('/').pop().replace(/\.[^/.]+$/, ''); }catch{ return '圖片'; } }
-    if (captions.length < sources.length) {
-      for (let i = captions.length; i < sources.length; i++) captions[i] = basename(sources[i]);
-    }
-
-    
+    // 主顯示圖元
     const displayImg = imgs[0] || (function(){
       const el = document.createElement('img');
       el.alt = '';
       imgBlock.appendChild(el);
       return el;
     })();
+    // 隱藏多餘 img
     imgs.slice(1).forEach(el => { el.style.display = 'none'; });
 
-    
-    let bubble = imgBlock.querySelector('.hover-center');
-    if (!bubble) {
-      bubble = document.createElement('span');
-      bubble.className = 'hover-center';
-      imgBlock.appendChild(bubble);
-    }
-
-    
+    // 導航按鈕
     let nav = imgBlock.querySelector('.img-nav');
     if (!nav) {
       nav = document.createElement('div');
@@ -750,10 +704,9 @@ window.addEventListener('load', () => {
       <button class="prev" aria-label="上一張"><i class="arrow"></i></button>
       <button class="next" aria-label="下一張"><i class="arrow"></i></button>
     `;
+    if (id === 'section3') nav.style.display = 'none'; // 單張不顯示切換
 
-    if(id==='section3') nav.style.display='none'
-
-    
+    // 圓點
     let dots = imgBlock.querySelector('.img-dots');
     if (!dots) {
       dots = document.createElement('div');
@@ -764,29 +717,29 @@ window.addEventListener('load', () => {
       `<button type="button" aria-label="第 ${i+1} 張"${i===0?' aria-current="true"':''}></button>`
     ).join('');
 
-    
+    // 狀態 + 顯示
     let index = 0;
     function updateDots() {
       const bs = dots.querySelectorAll('button');
       bs.forEach((b,k)=> b.setAttribute('aria-current', k===index ? 'true' : 'false'));
     }
-    function updateCaption() {
-      bubble.textContent = captions[index] || basename(sources[index]) || '';
-    }
     function show(i){
       index = (i + sources.length) % sources.length;
       displayImg.src = sources[index];
       updateDots();
-      updateCaption();
     }
 
-    
+    // 初始化
     show(0);
-    nav.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); show(index - 1); });
-    nav.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); show(index + 1); });
+
+    // 事件
+    const prevBtn = nav.querySelector('.prev');
+    const nextBtn = nav.querySelector('.next');
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); show(index - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); show(index + 1); });
     dots.querySelectorAll('button').forEach((b,i)=> b.addEventListener('click', ()=> show(i)));
 
-    
+    // 自動播放（滑入暫停、滑出繼續）
     const AUTOPLAY_MS = 5000;
     let timer = null;
     function start(){ if(!timer) timer = setInterval(()=>show(index+1), AUTOPLAY_MS); }
@@ -796,6 +749,7 @@ window.addEventListener('load', () => {
     start();
   });
 })();
+
 
 
 (function(){
@@ -942,7 +896,9 @@ window.addEventListener('load', () => {
     hours: s.hours || '',
     desc: s.desc || '',
     img: s.img || '',                 
-    photos: Array.isArray(s.photos) ? s.photos.filter(Boolean) : [] 
+    photos: Array.isArray(s.photos) ? s.photos.filter(Boolean) : [] ,
+    product: s.product ?? s.products ?? s.goods ?? s.sell ?? ''
+    
   }));
 
 const pageSize = 4;
@@ -962,9 +918,11 @@ function render(){
     <div class="store-text">
       <div class="store-name">${item.name}</div>
       <div class="store-sub">${item.subtitle || ''}</div>
+      <div class="store-product">${item.product}</div>
     </div>
   </li>
 `).join('');
+
 
   const total = pageCount();
   pageIndicator.textContent = total > 1 ? `第 ${page+1} / ${total} 頁` : '';
@@ -1350,30 +1308,6 @@ render();
   if (!wrap) return;
 
   
-  const css = `
-  #section1 .slider-container{position:relative;overflow:hidden;}
-  #section1 .hero-hover-overlay{
-    position:absolute;inset:0;background:rgba(0,0,0,.48);
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;transition:opacity .35s ease;pointer-events:none;
-  }
-  #section1 .slider-container:hover .hero-hover-overlay{opacity:1;}
-  #section1 .overlay-inner{padding:2rem 3rem;text-align:center;}
-  #section1 .overlay-text{
-    color:#fff;font-weight:800;line-height:1.15;
-    font-size:clamp(22px, 3vw, 40px);letter-spacing:.02em;
-    text-shadow:0 2px 12px rgba(0,0,0,.35);
-    transform:translateY(6px);opacity:.92;transition:transform .35s ease,opacity .35s ease;
-  }
-  #section1 .slider-container:hover .overlay-text{transform:translateY(0);opacity:1;}
-  @media (prefers-reduced-motion: reduce){
-    #section1 .hero-hover-overlay,#section1 .overlay-text{transition:none !important;}
-  }`;
-  const styleEl = document.createElement('style');
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
-
-  
   const overlay = document.createElement('div');
   overlay.className = 'hero-hover-overlay';
   overlay.innerHTML = `<div class="overlay-inner"><div class="overlay-text"></div></div>`;
@@ -1664,3 +1598,4 @@ function refreshShopSlides(){
     requestAnimationFrame(()=>{ updateSlidePosition && updateSlidePosition(); });
   }catch(e){}
 }
+
