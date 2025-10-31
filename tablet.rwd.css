@@ -309,10 +309,7 @@
   }
 
   /* Hide gallery arrows at this width to keep layout steady */
-  #section3 .img-nav, #section4 .img-nav, #section5 .img-nav, #section6 .img-nav, #section7 .img-nav,
-  #section3 .img-dots, #section4 .img-dots, #section5 .img-dots, #section6 .img-dots, #section7 .img-dots {
-    display: none !important;
-  }
+  
 }
 
 
@@ -1328,7 +1325,6 @@ p, .paragraph, .body-text, .desc, .copy{
   font-size: var(--fs-text);
   line-height: var(--lh-text);
   color:#444;
-  margin-top: 4px;
 }
 
 /* 新增的「販售商品」 */
@@ -1336,7 +1332,7 @@ p, .paragraph, .body-text, .desc, .copy{
   font-size: var(--fs-small);
   line-height: 1.55;
   color:#777;
-  margin-top: 8px;
+  margin-top: 16px;
 }
 
 /* 分頁指示/次要資訊 */
@@ -1397,5 +1393,43 @@ p, .paragraph, .body-text, .desc, .copy{
 nav a, .btn, button{
   font-size: var(--fs-small);
   line-height: 1.3;
+}
+
+/* === S3–S7：平板與中尺寸(800–1280px) 再縮圖、恢復箭頭 === */
+@media (min-width: 800px) and (max-width: 1280px) {
+  /* 圖片高度再收一點，避免「字大圖太大」 */
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img {
+    aspect-ratio: auto !important;
+  }
+
+  /* 強制顯示箭頭（前面有媒體查詢把它隱藏，這裡蓋回來） */
+  #section3 .img-nav, #section4 .img-nav, #section5 .img-nav, #section6 .img-nav, #section7 .img-nav {
+    display: flex !important;
+  }
+  #section3 .img-dots, #section4 .img-dots, #section5 .img-dots, #section6 .img-dots, #section7 .img-dots {
+    display: flex !important;
+  }
+}
+
+/* === S3–S7：手機（≤640px）統一高度，不讓圖過大 === */
+@media (max-width: 640px) {
+
+  #section3 .image-block img,
+  #section4 .image-block img,
+  #section5 .image-block img,
+  #section6 .image-block img,
+  #section7 .image-block img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  /* 手機也保留箭頭（如果你之後想關掉再跟我說） */
+  .frame-tilt .img-nav .prev{
+    display: flex !important;
+  }
 }
 

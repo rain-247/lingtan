@@ -154,7 +154,7 @@ const stores = [
   ],
   ownerName: "小鮮肉姐姐",
   hours: `12：00～19：00 
-  (星期三到星期日)`,
+  (星期一到星期日)`,
   desc: `Q發柴燒雞蛋糕，不只鬆軟，更帶著獨特紮實口感與濃郁奶香，不加發泡粉，真材實料吃得到！除了經典卡士達、黑糖麻糬，還有限定麻辣口味，驚喜不斷。
 
 老闆淑婷姐原本是土木科出身，將「比例精準」的精神融入麵糊調製，做出獨樹一幟的雞蛋糕。她更推出學生折扣、考一百分免費吃，並與長照機構、社福單位合作，把甜點變成溫暖陪伴。
@@ -308,14 +308,13 @@ desc: `走進菱潭街，總會被一股甜香吸引，那就是「糖糖鮮菓�
 `
 },{
 id: "lingtan",
-name: "龍潭文風造庄聯盟",
+name: "菱風客 | 創生書間",
 subtitle: "走讀菱潭街，發現龍潭的美好",
-product: "販售：在地導覽",
+product: "販售：知識轉譯/文風體驗/跨域走讀/行旅提案",
 coords: { x: 35, y: 38 },
 img: 'img/store (6).png', 
 photos: [                           
-'img/4-1.jpg',
-'img/4-2.jpg'
+'img/ling.jpg',
 ],
 ownerName: "蔡老師",
 hours: `12:00–20:00
@@ -659,15 +658,13 @@ window.addEventListener('load', () => {
 
   // 仍保留圖片來源設定；可照原檔名路徑調整
   const IMAGE_SOURCES = {
-    section3: ['./img/3_1.jpg'],
-    section4: ['./img/4-1.jpg','./img/4-2.jpg','./img/4-3.jpg','./img/4-4.jpg'],
-    section5: ['./img/5-1.jpg','./img/5-2.jpg','./img/5-3.jpg'],
-    section6: ['./img/6-1.jpg','./img/6-2.jpg','./img/6-3.jpg'],
+    section3: ['./img/3_1.jpg','./img/4-1.jpg','./img/4-2.jpg','./img/4-3.jpg',],
+    section4: ['./img/4-4.jpg'],
+    section5: ['./img/5-1.jpg','./img/5-2.jpg','./img/5-3.jpg','./img/5-4.jpg'],
+    section6: ['./img/6-1.jpg','./img/6-2.jpg','./img/6-3.jpg','./img/5-5.jpg'],
     section7: ['./img/7-1.jpg','./img/7-2.jpg','./img/7-3.jpg'],
   };
 
-  // ⛔ 已撤除：黑色遮罩與 hover 中央文字的 CSS 注入
-  // ⛔ 已撤除：CAPTION_SOURCES 與所有說明文字相關邏輯
 
   sections.forEach(id => {
     const root = document.getElementById(id);
@@ -704,7 +701,7 @@ window.addEventListener('load', () => {
       <button class="prev" aria-label="上一張"><i class="arrow"></i></button>
       <button class="next" aria-label="下一張"><i class="arrow"></i></button>
     `;
-    if (id === 'section3') nav.style.display = 'none'; // 單張不顯示切換
+    // if (id === 'section3') nav.style.display = 'none'; // 單張不顯示切換
 
     // 圓點
     let dots = imgBlock.querySelector('.img-dots');
@@ -1420,6 +1417,25 @@ dotsEl?.addEventListener('click', () => {
 
 
 
+// --- 保險：補變數綁定到 window 上的別名（放在綁事件之前）---
+const slidePrev =
+  window.slidePrev ||
+  window.SlidePrev ||
+  document.getElementById('shopSlidePrev') ||
+  document.getElementById('shopslidePrev') ||
+  null;
+
+const slideNext =
+  window.slideNext ||
+  window.SlideNext ||
+  document.getElementById('shopSlideNext') ||
+  document.getElementById('shopslideNext') ||
+  null;
+
+const slideDots =
+  document.getElementById('shopSlideDots') ||
+  document.querySelector('#section8 .shop-slide-dots') ||
+  null;
 
 
 slidePrev && slidePrev && slidePrev.addEventListener('click', () => {
@@ -1599,3 +1615,66 @@ function refreshShopSlides(){
   }catch(e){}
 }
 
+
+/* === Force show arrows/dots for section3 & section7 @400–640px === */
+(function () {
+  const TARGET_SECTIONS = ['section3', 'section7'];
+
+  function forceShowNav() {
+    const w = window.innerWidth;
+    const inRange = (w >= 400 && w <= 640);
+
+    TARGET_SECTIONS.forEach(id => {
+      const root = document.getElementById(id);
+      if (!root) return;
+
+      const nav  = root.querySelector('.frame-tilt .img-nav');
+      const prev = root.querySelector('.frame-tilt .img-nav .prev');
+      const next = root.querySelector('.frame-tilt .img-nav .next');
+      const dots = root.querySelector('.img-dots');
+
+      if (!nav) return;
+
+      if (inRange) {
+        // 清掉可能被寫入的 inline 隱藏
+        [nav, prev, next, dots].forEach(el => {
+          if (!el) return;
+          el.style.removeProperty('display');
+          el.style.removeProperty('visibility');
+          el.style.removeProperty('opacity');
+          el.style.pointerEvents = 'auto';
+          // 同時再加一道保險（等同 CSS 的 !important）
+          el.style.setProperty('display', (el === nav ? 'flex' : 'grid'), 'important');
+        });
+        nav.style.zIndex = '5';
+      } else {
+        // 超出區間，讓原本 CSS/JS 自己接管
+        [nav, prev, next, dots].forEach(el => {
+          if (!el) return;
+          el.style.removeProperty('display');
+          el.style.removeProperty('z-index');
+        });
+      }
+    });
+  }
+
+  // 監聽 resize（避免 RWD 切換時又被其他程式碼覆蓋）
+  window.addEventListener('resize', forceShowNav);
+
+  // 等初始輪播建立完成後再執行一次（含保險的微延遲）
+  window.addEventListener('load', () => {
+    forceShowNav();
+    setTimeout(forceShowNav, 30);
+    setTimeout(forceShowNav, 120);
+
+    // 若有其他程式碼會改 .img-nav 的 style/class，用 MutationObserver 抓回來
+    TARGET_SECTIONS.forEach(id => {
+      const root = document.getElementById(id);
+      if (!root) return;
+      const nav = root.querySelector('.frame-tilt .img-nav');
+      if (!nav) return;
+      new MutationObserver(forceShowNav)
+        .observe(nav, { attributes: true, attributeFilter: ['style', 'class'] });
+    });
+  });
+})();

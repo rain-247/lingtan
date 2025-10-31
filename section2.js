@@ -35,12 +35,12 @@
 //    title：左下角粗體標題
 //    desc ：標題下方敘述
 const IMGS = [
-    { src: './img/map_ling.jpg', title: '菱潭街',   desc: '五顏六色的燈籠點亮了街道。' },
-    { src: './img/map_long.jpg', title: '龍元宮', desc: '斑駁門面與落日，時間在磚牆上寫字。' },
-    { src: './img/map_south.jpg', title: '南天宮',   desc: '老屋新生，保留骨架，長出新故事。' },
-    { src: './img/map_water.jpg', title: '龍潭大池',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' },
-    { src: './img/map_wu.jpg', title: '武德殿',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' },
-    { src: './img/map_zong.jpg', title: '鐘肇政文學園區',   desc: '午後的步伐緩下來，風把咖啡香帶回家。' }
+    { src: './img/map_ling.jpg', title: '菱潭街',   desc: '' },
+    { src: './img/map_long.jpg', title: '龍元宮', desc: '' },
+    { src: './img/map_south.jpg', title: '南天宮',   desc: '' },
+    { src: './img/map_water.jpg', title: '龍潭大池',   desc: '' },
+    { src: './img/map_wu.jpg', title: '龍潭武德殿',   desc: '' },
+    { src: './img/map_zong.jpg', title: '鐘肇政文學園區',   desc: '' }
   ];
 
   // 生成每張卡片（圖 + 左下角說明框）

@@ -325,9 +325,7 @@ section {
 		object-fit: contain !important;
 		aspect-ratio: auto !important;
 	}
-	#section3 .img-nav, #section4 .img-nav, #section5 .img-nav, #section6 .img-nav, #section7 .img-nav, #section3 .img-dots, #section4 .img-dots, #section5 .img-dots, #section6 .img-dots, #section7 .img-dots {
-		display: none !important;
-	}
+	
 }
 .image-block .frame-tilt {
 	position: relative;
@@ -1200,9 +1198,7 @@ nav.fixed .navbar-inner a.is-active::after {
 	opacity: 1;
 	transform: translate(-50%, -50%) scale(1.02);
 }
-#section1 .img-nav, #section3 .img-nav:has(+ .img-dots:empty) {
-	display: none !important;
-}
+
 #section3 .image-block, #section4 .image-block, #section5 .image-block, #section6 .image-block, #section7 .image-block {
 	position: relative;
 	border-radius: 14px;
@@ -1380,7 +1376,7 @@ body #section8 .store-card {
 	min-height: clamp(220px, 26vw, 320px);
 }
 body #section8 .store-figure {
-	width: 100%;
+	width: 50%;
 	height: 100%;
 	border: inherit !important;
 	border-radius: inherit !important;
@@ -1424,7 +1420,7 @@ body #section8 .store-card {
 body #section8 .store-figure {
 	border: none !important;
 	border-radius: 0 !important;
-	width: 50%;
+	width: 40%;
 	height: auto;
 	display: flex;
 	align-items: center;
@@ -2978,11 +2974,6 @@ nav {
 
 
 
-/* 第 3 區段：隱藏箭頭（僅一張圖不需導覽） */
-#section3 .img-nav {
-  display: none !important;
-  visibility: hidden !important;
-}
 
 
 /* === 2025-10-23 Update: Left-align Section1 title and subtitle === */
@@ -3048,6 +3039,7 @@ nav {
 
 
 /* === [Override] Sections 4–7 image full-bleed: remove inner gaps, fill column === */
+#section3 .image-block,
 #section4 .image-block,
 #section5 .image-block,
 #section6 .image-block,
@@ -3060,9 +3052,11 @@ nav {
   padding: 0 !important;
   border: 0 !important;
   background: transparent !important;
-  overflow: hidden !important;            /* ensure no letterboxing */
+  overflow: hidden !important;   
+  height: 45vh !important;         /* ensure no letterboxing */
 }
 
+#section3 .image-block img,
 #section4 .image-block img,
 #section5 .image-block img,
 #section6 .image-block img,
@@ -3079,10 +3073,12 @@ nav {
 }
 
 /* Kill any inner wrappers creating whitespace */
+#section3 .image-block > *,
 #section4 .image-block > *,
 #section5 .image-block > *,
 #section6 .image-block > *,
 #section7 .image-block > *,
+#section3 .frame-tilt > *,
 #section4 .frame-tilt > *,
 #section5 .frame-tilt > *,
 #section6 .frame-tilt > *,
@@ -3092,12 +3088,14 @@ nav {
 }
 
 /* When galleries exist in 4–7, ensure slides fill container with no gaps */
+#section3 .img-gallery .img-track,
 #section4 .img-gallery .img-track,
 #section5 .img-gallery .img-track,
 #section6 .img-gallery .img-track,
 #section7 .img-gallery .img-track {
   gap: 0 !important;
 }
+#section3 .img-gallery .img-slide,
 #section4 .img-gallery .img-slide,
 #section5 .img-gallery .img-slide,
 #section6 .img-gallery .img-slide,
@@ -3249,7 +3247,6 @@ nav {
   font-size: clamp(13px, 1.05vw, 15px) !important;
   color: #475569 !important;
   line-height: 1.65 !important;
-  margin: 0 !important;
   opacity: 0.95 !important;
 }
 
@@ -3276,8 +3273,7 @@ nav {
   font-weight: 500;
   letter-spacing: 0.3px;
   line-height: 1.5;
-  margin-top: 24px;              /* 與副標拉開距離 */
-  margin-bottom: 2px;
+  margin-top: 36px;              /* 與副標拉開距離 */
   text-align: left;
 }
 
@@ -3303,7 +3299,6 @@ nav {
 }
 
 /* === 移除所有圖片 hover 變黑效果 (section1~section7) === */
-#section1 img:hover,
 #section2 img:hover,
 #section3 img:hover,
 #section4 img:hover,
@@ -3316,7 +3311,6 @@ nav {
 }
 
 /* 移除黑色遮罩層與 hover 半透明效果 */
-#section1 .image-block::before,
 #section2 .image-block::before,
 #section3 .image-block::before,
 #section4 .image-block::before,
@@ -3330,7 +3324,6 @@ nav {
 }
 
 /* 防止任何 hover 狀態加深顏色 */
-#section1 .image-block:hover::before,
 #section2 .image-block:hover::before,
 #section3 .image-block:hover::before,
 #section4 .image-block:hover::before,
@@ -3365,4 +3358,27 @@ nav {
   background: none !important;
   opacity: 0 !important;
 }
+
+#section9 {
+	width: 55%;
+	margin: auto;
+}
+
+.frame-tilt {
+	width: 100%;
+}
+
+/* === S3–S7：讓圖片再小一點（桌機） === */
+#section3 .image-block,
+#section4 .image-block,
+#section5 .image-block,
+#section6 .image-block,
+#section7 .image-block { flex: 0 0 48% !important; }
+
+#section3 .text-block,
+#section4 .text-block,
+#section5 .text-block,
+#section6 .text-block,
+#section7 .text-block { flex: 0 0 52% !important; }
+
 
